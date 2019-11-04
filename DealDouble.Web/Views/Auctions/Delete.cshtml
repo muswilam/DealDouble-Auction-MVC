@@ -1,9 +1,0 @@
-﻿@model DealDouble.Entities.Auction
-
-<h1>Are you sure you want to delete ethis auction</h1>
-
-<form method="post">
-    <input name="Id" value="@Model.Id" hidden />
-    <button>Yes</button>
-    <a href="@Url.Action("Index","Auctions")" class="btn btn-default">No</a>
-</form>

@@ -2,7 +2,9 @@
 
 <h2>Edit Auction</h2>
 
-<form method="post">
+<form id="editForm">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
     <label>Title</label>
     <input name="Title" value="@Model.Title" />
 
@@ -23,5 +25,20 @@
     <input name="EndingTime" value="@Model.EndingTime"/>
 
     <br />
-    <button>Save</button>
+    <button type="button" id="updateBtn">Update</button>
 </form>
+
+<script>
+    $("#updateBtn").click(function () {
+        $.ajax({
+            url: '/Auctions/Edit',
+            method: 'Post',
+            data: $("#editForm").serialize(),
+        }).done(function (response) {
+            debugger;
+            $("#listingArea").html(response);
+        }).fail(function () {
+            alert("Fail");
+        });
+    })
+</script>

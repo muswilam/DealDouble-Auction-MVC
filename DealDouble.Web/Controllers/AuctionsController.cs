@@ -44,7 +44,7 @@ namespace DealDouble.Web.Controllers
             var service = new AuctionsService();
 
             var auction = service.GetAuction(id);
-            return View(auction);
+            return PartialView(auction);
         }
 
         [HttpPost]
@@ -54,16 +54,7 @@ namespace DealDouble.Web.Controllers
 
             service.UpdateAuction(auction);
 
-            return View(auction);
-        }
-
-        [HttpGet]
-        public ActionResult Delete(int id)
-        {
-            var service = new AuctionsService();
-
-            var auction = service.GetAuction(id);
-            return View(auction);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

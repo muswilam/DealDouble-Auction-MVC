@@ -27,8 +27,8 @@
                     <td>@auction.StartingTime</td>
                     <td>@auction.EndingTime</td>
                     <td>
-                        <a href="@Url.Action("Edit", "Auctions", new { id = auction.Id})" class="btn btn-info">Edit</a>
-                        <a href="@Url.Action("Delete", "Auctions", new { id = auction.Id})" class="btn btn-danger">Delete</a>
+                        <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
+                        <button data-id="@auction.Id" class="deleteBtn btn btn-danger">Delete</button>
                     </td>
                 </tr>
             }
@@ -49,6 +49,39 @@
             .done(function (response) {
                 $("#actionArea").html(response);
             })
+        });
+
+        $(".editBtn").click(function () {
+            var id =$(this).attr("data-id");
+            $.ajax({
+                url: '/Auctions/Edit',
+                method: 'Get',
+                data: {
+                    id: id,
+                }
+            })
+            .done(function (response) {
+                $("#actionArea").html(response);
+            })
+        });
+
+        $(".deleteBtn").click(function () {
+            debugger;
+            var confirmation = confirm("Are u sure wanna delete this auction");
+            debugger;
+            if (confirmation) {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: '/Auctions/Delete',
+                    method: 'Post',
+                    data: {
+                        id: id,
+                    }
+                })
+                .done(function (response) {
+                    $("#listingArea").html(response);
+                })
+            }
         });
     </script>
 </div>
