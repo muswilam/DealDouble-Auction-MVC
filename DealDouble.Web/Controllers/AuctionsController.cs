@@ -15,14 +15,17 @@ namespace DealDouble.Web.Controllers
             var service = new AuctionsService();
 
             var auctions  = service.GetAuctions();
-            
+
+            if (Request.IsAjaxRequest())
+                return PartialView(auctions);
+
             return View(auctions);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
