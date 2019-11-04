@@ -1,0 +1,27 @@
+﻿@model IEnumerable<DealDouble.Entities.Auction>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actual Price</th>
+            <th>Starting Time</th>
+            <th>Ending Time</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var auction in Model)
+        {
+            <tr>
+                <td>@auction.Title</td>
+                <td>@auction.Description</td>
+                <td>@auction.ActualPrice</td>
+                <td>@auction.StartingTime</td>
+                <td>@auction.EndingTime</td>
+                <td><a href="@Url.Action("Delete", "Auctions", new { id = auction.Id})" class="btn btn-danger">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

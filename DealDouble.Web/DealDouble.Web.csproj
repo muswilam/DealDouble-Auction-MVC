@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -228,6 +229,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Auctions\Create.cshtml" />
+    <Content Include="Views\Auctions\Edit.cshtml" />
+    <Content Include="Views\Auctions\Index.cshtml" />
+    <Content Include="Views\Auctions\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -238,6 +243,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DealDouble.Entities\DealDouble.Entities.csproj">
+      <Project>{0992d25e-55d9-4068-a321-885dae9ea28f}</Project>
+      <Name>DealDouble.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DealDouble.Services\DealDouble.Services.csproj">
+      <Project>{74fd36de-3aff-42a8-918b-54697f65c4b7}</Project>
+      <Name>DealDouble.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

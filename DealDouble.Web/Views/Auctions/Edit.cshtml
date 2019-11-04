@@ -1,0 +1,27 @@
+﻿@model DealDouble.Entities.Auction
+
+<h2>Edit Auction</h2>
+
+<form method="post">
+    <label>Title</label>
+    <input name="Title" value="@Model.Title" />
+
+    <br />
+    <label>Description</label>
+    <input name="Description" value="@Model.Description" />
+
+    <br />
+    <label>Actual Price</label>
+    <input name="ActualPrice" value="@Model.ActualPrice"/>
+
+    <br />
+    <label>Starting Time</label>
+    <input name="StartingTime" value="@Model.StartingTime" />
+
+    <br />
+    <label>Ending Time</label>
+    <input name="EndingTime" value="@Model.EndingTime"/>
+
+    <br />
+    <button>Save</button>
+</form>
