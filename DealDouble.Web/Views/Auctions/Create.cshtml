@@ -2,27 +2,33 @@
 <h2>Create Auction</h2>
 
 <form id="createForm">
-    <label>Title</label>
-    <input name="Title" />
 
-    <br />
-    <label>Description</label>
-    <input name="Description" />
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" name="Title" id="Title"/>
+    </div>
 
-    <br />
-    <label>Actual Price</label>
-    <input name="ActualPrice" />
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" name="Description" id="Description" />
+    </div>
 
-    <br />
-    <label>Starting Time</label> 
-    <input name="StartingTime" />
+    <div class="form-group">
+        <label for="ActualPrice">Actual Price</label>
+        <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" />
+    </div>
 
-    <br />
-    <label>Ending Time</label>
-    <input name="EndingTime" />
+    <div class="form-group">
+        <label for="StartingTime">Starting Time</label>
+        <input type="text" class="form-control" name="StartingTime" id="StartingTime" />
+    </div>
 
-    <br />
-    <button type="button" id="saveBtn">Save</button>
+    <div class="form-group">
+        <label for="EndingTime">Ending Time</label>
+        <input type="text" class="form-control" name="EndingTime" id="EndingTime" />
+    </div>
+
+    <button type="button" class="btn btn-success" id="saveBtn">Save</button>
 </form>
 
 <script>

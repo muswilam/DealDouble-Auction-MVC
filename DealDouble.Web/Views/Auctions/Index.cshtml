@@ -1,87 +1,90 @@
 ﻿@model IEnumerable<DealDouble.Entities.Auction>
 
-<div id="listingArea">
+<div class="row">
+    <div class="col-lg-12" id="listingArea">
+        <h2>Auctions</h2>
 
-    <div>
-        <button id="createBtn">Create new auction</button>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Actual Price</th>
-                <th>Starting Time</th>
-                <th>Ending Time</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var auction in Model)
-            {
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@auction.Title</td>
-                    <td>@auction.Description</td>
-                    <td>@auction.ActualPrice</td>
-                    <td>@auction.StartingTime</td>
-                    <td>@auction.EndingTime</td>
-                    <td>
-                        <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
-                        <button data-id="@auction.Id" class="deleteBtn btn btn-danger">Delete</button>
-                    </td>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actual Price</th>
+                    <th>Starting Time</th>
+                    <th>Ending Time</th>
+                    <th>Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
-    <div id="actionArea">
-
-    </div>
-
-    <script>
-        $("#createBtn").click(function () {
-            $.ajax({
-                url: '/Auctions/Create',
-                method: 'Get',
-
-            })
-            .done(function (response) {
-                $("#actionArea").html(response);
-            })
-        });
-
-        $(".editBtn").click(function () {
-            var id =$(this).attr("data-id");
-            $.ajax({
-                url: '/Auctions/Edit',
-                method: 'Get',
-                data: {
-                    id: id,
+            </thead>
+            <tbody>
+                @foreach (var auction in Model)
+                {
+                    <tr>
+                        <td>@auction.Title</td>
+                        <td>@auction.Description</td>
+                        <td>@auction.ActualPrice</td>
+                        <td>@auction.StartingTime</td>
+                        <td>@auction.EndingTime</td>
+                        <td>
+                            <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
+                            <button data-id="@auction.Id" class="deleteBtn btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
                 }
-            })
-            .done(function (response) {
-                $("#actionArea").html(response);
-            })
-        });
+            </tbody>
+        </table>
 
-        $(".deleteBtn").click(function () {
-            debugger;
-            var confirmation = confirm("Are u sure wanna delete this auction");
-            debugger;
-            if (confirmation) {
+        <div>
+            <button class="btn btn-success" id="createBtn">Create new auction</button>
+        </div>
+
+        <div id="actionArea">
+
+        </div>
+
+        <script>
+            $("#createBtn").click(function () {
+                $.ajax({
+                    url: '/Auctions/Create',
+                    method: 'Get',
+
+                })
+                .done(function (response) {
+                    $("#actionArea").html(response);
+                })
+            });
+
+            $(".editBtn").click(function () {
                 var id = $(this).attr("data-id");
                 $.ajax({
-                    url: '/Auctions/Delete',
-                    method: 'Post',
+                    url: '/Auctions/Edit',
+                    method: 'Get',
                     data: {
                         id: id,
                     }
                 })
                 .done(function (response) {
-                    $("#listingArea").html(response);
+                    $("#actionArea").html(response);
                 })
-            }
-        });
-    </script>
+            });
+
+            $(".deleteBtn").click(function () {
+                debugger;
+                var confirmation = confirm("Are u sure wanna delete this auction");
+                debugger;
+                if (confirmation) {
+                    var id = $(this).attr("data-id");
+                    $.ajax({
+                        url: '/Auctions/Delete',
+                        method: 'Post',
+                        data: {
+                            id: id,
+                        }
+                    })
+                    .done(function (response) {
+                        $("#listingArea").html(response);
+                    })
+                }
+            });
+        </script>
+    </div>
 </div>
