@@ -43,7 +43,7 @@
 <script>
     $("#saveBtn").click(function () {
         $.ajax({
-            url: '/Auctions/Create',
+            url: '@Url.Action("Create","Auctions")',
             type: 'Post',
             data: $("#createForm").serialize(),
         }).done(function (response) {

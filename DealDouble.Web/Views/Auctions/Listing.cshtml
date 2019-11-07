@@ -22,7 +22,7 @@
                 <td>@auction.EndingTime</td>
                 <td>
                     <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
-                    <button data-id="@auction.Id" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#formModal">Delete</button>
+                    <button data-id="@auction.Id" class="deleteBtn btn btn-danger" >Delete</button>
                 </td>
             </tr>
         }
@@ -33,7 +33,7 @@
     $(".editBtn").click(function () {
         var id = $(this).attr("data-id");
         $.ajax({
-            url: '/Auctions/Edit',
+            url: '@Url.Action("Edit","Auctions")',
             method: 'Get',
             data: {
                 id: id,
@@ -46,20 +46,10 @@
     });
 
     $(".deleteBtn").click(function () {
-        var confirmation = confirm("Are u sure wanna delete this auction");
-        if (confirmation) {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                url: '/Auctions/Delete',
-                method: 'Post',
-                data: {
-                    id: id,
-                }
-            })
-            .done(function (response) {
-                $("#listingArea").html(response);
-            })
-        }
+        debugger;
+        $("#deleteModal").modal("toggle");
+        $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
     });
+
 </script>
 
