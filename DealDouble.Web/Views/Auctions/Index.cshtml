@@ -62,7 +62,6 @@
     });
 
     $("#modalDeleteBtn").click(function () {
-        debugger;
         var id = $(this).attr("data-id");
         $.ajax({
             url: '@Url.Action("Delete","Auctions")',

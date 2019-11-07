@@ -57,6 +57,10 @@
     <Compile Include="Migrations\201911031822051_RenameEndingTimeColumnInAuctionTable.Designer.cs">
       <DependentUpon>201911031822051_RenameEndingTimeColumnInAuctionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911071735392_CreateAuctionPicturesTable.cs" />
+    <Compile Include="Migrations\201911071735392_CreateAuctionPicturesTable.Designer.cs">
+      <DependentUpon>201911071735392_CreateAuctionPicturesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911031822051_RenameEndingTimeColumnInAuctionTable.resx">
       <DependentUpon>201911031822051_RenameEndingTimeColumnInAuctionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911071735392_CreateAuctionPicturesTable.resx">
+      <DependentUpon>201911071735392_CreateAuctionPicturesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
