@@ -16,6 +16,9 @@ namespace DealDouble.Web.Controllers
         {
             AuctionsViewModel auctionModel = new AuctionsViewModel();
 
+            auctionModel.PageTitle = "Home Page";
+            auctionModel.PageDescription = "This is home page.";
+
             auctionModel.PromotedAuctions = service.GetPromotedAuctions();
             auctionModel.AllAuctions = service.GetAuctions();
 

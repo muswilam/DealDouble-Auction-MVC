@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DealDouble.Web.ViewModels;
 
 namespace DealDouble.Web.Controllers
 {
@@ -14,12 +15,17 @@ namespace DealDouble.Web.Controllers
         
         public ActionResult Index()
         {
-            var auctions  = service.GetAuctions();
+            var auctionsModel = new AuctionsListingViewModel();
+
+            auctionsModel.PageTitle = "Auctions";
+            auctionsModel.PageDescription = "Auctions listing page.";
+
+            auctionsModel.AllAuctions = service.GetAuctions();
 
             if (Request.IsAjaxRequest())
-                return PartialView(auctions);
+                return PartialView(auctionsModel);
 
-            return View(auctions);
+            return View(auctionsModel);
         }
 
         [HttpGet]
