@@ -20,12 +20,19 @@ namespace DealDouble.Web.Controllers
             auctionsModel.PageTitle = "Auctions";
             auctionsModel.PageDescription = "Auctions listing page.";
 
+            return View(auctionsModel);
+        }
+
+        public PartialViewResult Listing()
+        {
+            var auctionsModel = new AuctionsListingViewModel();
+
+            auctionsModel.PageTitle = "Auctions";
+            auctionsModel.PageDescription = "Auctions listing page.";
+
             auctionsModel.AllAuctions = service.GetAuctions();
 
-            if (Request.IsAjaxRequest())
-                return PartialView(auctionsModel);
-
-            return View(auctionsModel);
+            return PartialView(auctionsModel);
         }
 
         [HttpGet]
@@ -40,7 +47,7 @@ namespace DealDouble.Web.Controllers
 
             service.SaveAuction(auction);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Listing");
         }
 
         [HttpGet]
@@ -57,7 +64,7 @@ namespace DealDouble.Web.Controllers
 
             service.UpdateAuction(auction);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Listing");
         }
 
         [HttpGet]
@@ -73,7 +80,7 @@ namespace DealDouble.Web.Controllers
         {
             service.DeleteAuction(auction);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Listing");
         }
     }
 }

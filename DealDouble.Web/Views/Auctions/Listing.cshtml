@@ -1,0 +1,65 @@
+﻿@model AuctionsListingViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actual Price</th>
+            <th>Starting Time</th>
+            <th>Ending Time</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var auction in Model.AllAuctions)
+        {
+            <tr>
+                <td>@auction.Title</td>
+                <td>@auction.Description</td>
+                <td>@auction.ActualPrice</td>
+                <td>@auction.StartingTime</td>
+                <td>@auction.EndingTime</td>
+                <td>
+                    <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
+                    <button data-id="@auction.Id" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#formModal">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(".editBtn").click(function () {
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url: '/Auctions/Edit',
+            method: 'Get',
+            data: {
+                id: id,
+            }
+        })
+        .done(function (response) {
+            $("#formModal").modal("toggle");
+            $("#actionArea").html(response);
+        })
+    });
+
+    $(".deleteBtn").click(function () {
+        var confirmation = confirm("Are u sure wanna delete this auction");
+        if (confirmation) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                url: '/Auctions/Delete',
+                method: 'Post',
+                data: {
+                    id: id,
+                }
+            })
+            .done(function (response) {
+                $("#listingArea").html(response);
+            })
+        }
+    });
+</script>
+

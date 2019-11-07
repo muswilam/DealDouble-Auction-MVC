@@ -1,36 +1,47 @@
 ﻿@model DealDouble.Entities.Auction
 
-<h2>Edit Auction</h2>
-
+<div class="modal-header">
+    <h5 class="modal-title">Edit Auction</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <form id="editForm">
-    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="modal-body">
 
-    <div class="form-group">
-        <label for="Title">Title</label>
-        <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title" />
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title" />
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <input type="text" class="form-control" name="Description" id="Description" value="@Model.Description" />
+        </div>
+
+        <div class="form-group">
+            <label for="ActualPrice">Actual Price</label>
+            <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" value="@Model.ActualPrice" />
+        </div>
+
+        <div class="form-group">
+            <label for="StartingTime">Starting Time</label>
+            <input type="text" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime" />
+        </div>
+
+        <div class="form-group">
+            <label for="EndingTime">Ending Time</label>
+            <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="@Model.EndingTime" />
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="Description">Description</label>
-        <input type="text" class="form-control" name="Description" id="Description" value="@Model.Description" />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="updateBtn">Update</button>
     </div>
 
-    <div class="form-group">
-        <label for="ActualPrice">Actual Price</label>
-        <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" value="@Model.ActualPrice" />
-    </div>
-
-    <div class="form-group">
-        <label for="StartingTime">Starting Time</label>
-        <input type="text" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime" />
-    </div>
-
-    <div class="form-group">
-        <label for="EndingTime">Ending Time</label>
-        <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="@Model.EndingTime" />
-    </div>
-
-    <button type="button" class="btn btn-success" id="updateBtn">Update</button>
 </form>
 
 <script>
@@ -40,8 +51,8 @@
             method: 'Post',
             data: $("#editForm").serialize(),
         }).done(function (response) {
-            debugger;
             $("#listingArea").html(response);
+            $("#formModal").modal("toggle"); //to dismiss modal after finish
         }).fail(function () {
             alert("Fail");
         });

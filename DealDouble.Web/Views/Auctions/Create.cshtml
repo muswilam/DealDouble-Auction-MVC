@@ -1,45 +1,54 @@
 ﻿
-<h2>Create Auction</h2>
+<div class="modal-header">
+    <h5 class="modal-title">Create Auction</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 <form id="createForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" name="Title" id="Title" />
+        </div>
 
-    <div class="form-group">
-        <label for="Title">Title</label>
-        <input type="text" class="form-control" name="Title" id="Title"/>
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <input type="text" class="form-control" name="Description" id="Description" />
+        </div>
+
+        <div class="form-group">
+            <label for="ActualPrice">Actual Price</label>
+            <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" />
+        </div>
+
+        <div class="form-group">
+            <label for="StartingTime">Starting Time</label>
+            <input type="text" class="form-control" name="StartingTime" id="StartingTime" />
+        </div>
+
+        <div class="form-group">
+            <label for="EndingTime">Ending Time</label>
+            <input type="text" class="form-control" name="EndingTime" id="EndingTime" />
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="Description">Description</label>
-        <input type="text" class="form-control" name="Description" id="Description" />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="saveBtn">Save</button>
     </div>
-
-    <div class="form-group">
-        <label for="ActualPrice">Actual Price</label>
-        <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" />
-    </div>
-
-    <div class="form-group">
-        <label for="StartingTime">Starting Time</label>
-        <input type="text" class="form-control" name="StartingTime" id="StartingTime" />
-    </div>
-
-    <div class="form-group">
-        <label for="EndingTime">Ending Time</label>
-        <input type="text" class="form-control" name="EndingTime" id="EndingTime" />
-    </div>
-
-    <button type="button" class="btn btn-success" id="saveBtn">Save</button>
 </form>
+
 
 <script>
     $("#saveBtn").click(function () {
         $.ajax({
             url: '/Auctions/Create',
-            method: 'Post',
+            type: 'Post',
             data: $("#createForm").serialize(),
         }).done(function (response) {
-            debugger;
             $("#listingArea").html(response);
+            $("#formModal").modal("toggle"); //to dismiss modal after finish
         }).fail(function () {
             alert("Fail");
         });
