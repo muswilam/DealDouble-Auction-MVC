@@ -100,13 +100,13 @@
 
     //clone image template html to every added image 
     function AttachNewImage(imgId, imgUrl) {
-        debugger;
         var imgHtml = $("#picTemplate").clone();
 
         imgHtml.find('.image').attr('data-id', imgId);
         imgHtml.find('.image').attr('src', imgUrl);
 
         $("#picsArea").append(imgHtml.html());
-    }
 
+        RemoveImageOnClick();
+    }
 </script>

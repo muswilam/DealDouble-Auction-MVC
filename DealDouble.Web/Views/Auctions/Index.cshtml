@@ -50,7 +50,7 @@
 </div>
 
 <div id="picTemplate" style="display:none">
-    <img src="" class="image img-thumbnail mt-2" data-id="" />
+    <img src="" class="image img-thumbnail" data-id="" />
 </div>
 
 <script>
@@ -79,6 +79,15 @@
             $("#listingArea").html(response);
         })
     });
+
+    function RemoveImageOnClick() {
+        $("#picsArea .image").click(function () {
+            debugger;
+
+            $(this).remove();
+
+        })
+    }
 </script>
 
 
