@@ -32,6 +32,15 @@
             <label for="EndingTime">Ending Time</label>
             <input type="text" class="form-control" name="EndingTime" id="EndingTime" />
         </div>
+
+        <div class="form-group">
+            <label for="selectPictures">Select Pictures</label>
+            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" multiple />
+            <div id="picsArea">
+
+            </div>
+        </div>
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -53,4 +62,38 @@
             alert("Fail");
         });
     })
+
+    $("#selectPictures").change(function () {
+
+        debugger;
+
+        var pictures = this.files;
+        var picsData = new FormData();
+
+        for (var i = 0; i < pictures.length; i++) {
+            picsData.append("Picture", pictures[i]);
+        }
+
+        $.ajax({
+            url: '@Url.Action("UploadPictures", "Shared")',
+            type: 'Post',
+            data: picsData,
+            dataType: 'json',
+            processData: false,
+            contentType: false
+        }).done(function (responses) {
+            debugger;
+
+            for (var i = 0; i < responses.length; i++) {
+                var picResponse = responses[i];
+
+                var imgHtml = "<img src=" + picResponse.url + " class='img-fluid' />";
+                $("#picsArea").append(imgHtml);
+            }
+
+        }).fail(function () {
+            alert("Fail");
+        });
+    })
+
 </script>
