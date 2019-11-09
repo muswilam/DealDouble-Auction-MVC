@@ -42,10 +42,31 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Auction auction)
+        public ActionResult Create(CreateAuctionViewModel auctionModel)
         {
+            Auction newAuction = new Auction();
 
-            service.SaveAuction(auction);
+            newAuction.Title = auctionModel.Title;
+            newAuction.Description = auctionModel.Description;
+            newAuction.ActualPrice = auctionModel.ActualPrice;
+            newAuction.StartingTime = auctionModel.StartingTime;
+            newAuction.EndingTime = auctionModel.EndingTime;
+
+            var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
+
+            newAuction.AuctionPictures = new List<AuctionPicture>();
+            newAuction.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture() { PictureId = pi }));
+
+            #region Same functionality for adding auction pictures
+            /*foreach (var picId in pictureIds)
+            {
+                var auctionPicture = new AuctionPicture();
+                auctionPicture.PictureId = picId;
+                newAuction.AuctionPictures.Add(auctionPicture);
+            } */
+            #endregion
+
+            service.SaveAuction(newAuction);
 
             return RedirectToAction("Listing");
         }
