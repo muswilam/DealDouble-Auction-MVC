@@ -50,7 +50,7 @@
 </div>
 
 <div id="picTemplate" style="display:none">
-    <img src="" class="image img-thumbnail" data-id="" />
+    <img src="" class="image img-thumbnail" data-id="" style="width:230px;" />
 </div>
 
 <script>
@@ -79,6 +79,18 @@
             $("#listingArea").html(response);
         })
     });
+
+    //clone image template html to every added image 
+    function AttachNewImage(imgId, imgUrl) {
+        var imgHtml = $("#picTemplate").clone();
+
+        imgHtml.find('.image').attr('data-id', imgId);
+        imgHtml.find('.image').attr('src', imgUrl);
+
+        $("#picsArea").append(imgHtml.html());
+
+        RemoveImageOnClick();
+    }
 
     function RemoveImageOnClick() {
         $("#picsArea .image").click(function () {

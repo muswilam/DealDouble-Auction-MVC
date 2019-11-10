@@ -58,19 +58,25 @@ namespace DealDouble.Web.Controllers
             newAuction.EndingTime = auctionModel.EndingTime;
             newAuction.CategoryId = auctionModel.CategoryId;
 
-            var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
+            //check if we have aictionpictureIds back from form 
+            if (!String.IsNullOrEmpty(auctionModel.AuctionPictures))
+            {
+                var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
 
-            newAuction.AuctionPictures = new List<AuctionPicture>();
-            newAuction.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture() { PictureId = pi }));
+                newAuction.AuctionPictures = new List<AuctionPicture>();
+                newAuction.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture() { PictureId = pi }));
 
-            #region Same functionality for adding auction pictures
-            /*foreach (var picId in pictureIds)
+                #region Same functionality for adding auction pictures
+                /*foreach (var picId in pictureIds)
             {
                 var auctionPicture = new AuctionPicture();
                 auctionPicture.PictureId = picId;
                 newAuction.AuctionPictures.Add(auctionPicture);
             } */
-            #endregion
+                #endregion
+
+            }
+
 
             auctionService.SaveAuction(newAuction);
 
@@ -80,16 +86,40 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            var model = new EditAuctionViewModel();
 
-            var auction = auctionService.GetAuction(id);
-            return PartialView(auction);
+            model.Auction = auctionService.GetAuction(id);
+            model.Categories = catService.GetCategories();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Auction auction)
+        public ActionResult Edit(EditAuctionViewModel auctionModel)
         {
+            var auctionFromDb = auctionService.GetAuction(auctionModel.Id);
 
-            auctionService.UpdateAuction(auction);
+            auctionFromDb.Title = auctionModel.Title;
+            auctionFromDb.Description = auctionModel.Description;
+            auctionFromDb.ActualPrice = auctionModel.ActualPrice;
+            auctionFromDb.StartingTime = auctionModel.StartingTime;
+            auctionFromDb.EndingTime = auctionModel.EndingTime;
+            auctionFromDb.CategoryId = auctionModel.CategoryId;
+
+            //there's a BUG here (update auction pictures)
+            //check if we have aictionpictureIds back from form  
+            //if(!String.IsNullOrEmpty(auctionModel.AuctionPictures))
+            //{
+            //    var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
+
+            //    auctionFromDb.AuctionPictures = new List<AuctionPicture>();
+            //    auctionFromDb.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture()
+            //    {
+            //        PictureId = pi,
+            //    }));
+            //}
+           
+            auctionService.UpdateAuction(auctionFromDb);
 
             return RedirectToAction("Listing");
         }

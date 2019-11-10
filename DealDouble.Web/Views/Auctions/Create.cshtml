@@ -46,7 +46,7 @@
 
         <div class="form-group">
             <label for="selectPictures">Select Pictures</label>
-            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" multiple />
+            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" multiple/>
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea"></div>
         </div>
@@ -84,6 +84,7 @@
     })
 
     $("#selectPictures").change(function () {
+        debugger;
         var pictures = this.files;
         var picsData = new FormData();
 
@@ -95,7 +96,6 @@
             url: '@Url.Action("UploadPictures", "Shared")',
             type: 'Post',
             data: picsData,
-            dataType: 'json',
             processData: false,
             contentType: false
         }).done(function (responses) {
@@ -109,15 +109,5 @@
         });
     })
 
-    //clone image template html to every added image 
-    function AttachNewImage(imgId, imgUrl) {
-        var imgHtml = $("#picTemplate").clone();
-
-        imgHtml.find('.image').attr('data-id', imgId);
-        imgHtml.find('.image').attr('src', imgUrl);
-
-        $("#picsArea").append(imgHtml.html());
-
-        RemoveImageOnClick();
-    }
+ 
 </script>
