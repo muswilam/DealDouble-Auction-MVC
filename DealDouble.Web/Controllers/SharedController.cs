@@ -29,17 +29,18 @@ namespace DealDouble.Web.Controllers
                 //create picName, and path(url) 
                 var fileName = Guid.NewGuid() + Path.GetExtension(picture.FileName);
                 var path = Server.MapPath("~/Content/images/") + fileName;
-                
+
+                var picUrl = "/Content/images/" + fileName;
                 //upload pic into images file
                 picture.SaveAs(path);
 
                 //save pic url in db
                 var newPic = new Picture();
-                newPic.Url = path;
+                newPic.Url = picUrl;
 
                 int picId = service.SavePicture(newPic);
 
-                picturesJSON.Add(new { id = picId, url = "/Content/images/" + fileName });
+                picturesJSON.Add(new { id = picId, url = picUrl });
             }
 
             json.Data = picturesJSON;

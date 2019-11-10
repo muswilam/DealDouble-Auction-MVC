@@ -1,15 +1,53 @@
-﻿@model DealDouble.Entities.Auction
+﻿@model AuctionViewModel
 
 <div class="row">
 
     <div class="col-lg-12">
 
         <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+
+            @if (Model.Auction.AuctionPictures != null && Model.Auction.AuctionPictures.Count() > 0)
+            {
+                var firstAuctionPicture = Model.Auction.AuctionPictures.First();
+                
+                var i = 0;
+                <div id="carouselIndicators" class="carousel slide my-4" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @foreach (var picture in Model.Auction.AuctionPictures)
+                        {
+                            var active = picture == firstAuctionPicture ? "active" : string.Empty;
+                                
+                            <li class="@active" data-target="#carouselIndicators" data-slide-to="@i"></li>
+                            i++;
+                        }
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        @foreach (var auctionPicture in Model.Auction.AuctionPictures)
+                        {
+                            var active = auctionPicture == firstAuctionPicture ? "active" : string.Empty;
+                            
+                            <div class="carousel-item @active">
+                                <img class="d-block img-fluid" src="@auctionPicture.Picture.Url">
+                            </div>
+                        }
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+            }
+
+
             <div class="card-body">
-                <h3 class="card-title">@Model.Title</h3>
-                <h4>@Model.ActualPrice</h4>
-                <p class="card-text">@Model.Description</p>
+                <h3 class="card-title">@Model.Auction.Title</h3>
+                <h4>@Model.Auction.ActualPrice</h4>
+                <p class="card-text">@Model.Auction.Description</p>
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                 4.0 stars
             </div>

@@ -97,9 +97,14 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var auction = auctionService.GetAuction(id);
+            var model = new AuctionViewModel();
 
-            return View(auction);
+            model.Auction = auctionService.GetAuction(id);
+
+            model.PageTitle = "Auction Details: " + model.Auction.Title;
+            model.PageDescription = "Description"; //model.Auction.Description.Substring(0, 10);
+
+            return View(model);
         }
 
         [HttpPost]

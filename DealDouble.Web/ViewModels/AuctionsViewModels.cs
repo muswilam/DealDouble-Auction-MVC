@@ -6,6 +6,11 @@ using DealDouble.Entities;
 
 namespace DealDouble.Web.ViewModels
 {
+    public class AuctionViewModel : PageViewModel
+    {
+        public Auction Auction { get; set; }
+    }
+
     public class AuctionsListingViewModel : PageViewModel
     {
         public List<Auction> AllAuctions { get; set; }

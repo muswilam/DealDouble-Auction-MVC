@@ -15,7 +15,9 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            return context.Auctions.Include(a => a.Category).ToList();
+            return context.Auctions.Include(a => a.Category)
+                .Include(a => a.AuctionPictures)
+                .Include("AuctionPictures.Picture").ToList();
         }
 
         public List<Auction> GetPromotedAuctions()
@@ -29,7 +31,7 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            return context.Auctions.Where(a => a.Id == id).First();
+            return context.Auctions.Include(a => a.AuctionPictures).Include("AuctionPictures.Picture").Where(a => a.Id == id).First();
         }
 
         public void SaveAuction(Auction auction)
