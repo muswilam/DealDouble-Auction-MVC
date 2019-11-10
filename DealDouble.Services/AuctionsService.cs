@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace DealDouble.Services
 {
@@ -14,7 +15,7 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            return context.Auctions.ToList();
+            return context.Auctions.Include(a => a.Category).ToList();
         }
 
         public List<Auction> GetPromotedAuctions()
@@ -43,7 +44,7 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            context.Entry(auctionModel).State = System.Data.Entity.EntityState.Modified;
+            context.Entry(auctionModel).State = EntityState.Modified;
 
             context.SaveChanges();
         }
@@ -52,7 +53,7 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            context.Entry(auctionModel).State = System.Data.Entity.EntityState.Deleted;
+            context.Entry(auctionModel).State = EntityState.Deleted;
 
             context.SaveChanges();
         }

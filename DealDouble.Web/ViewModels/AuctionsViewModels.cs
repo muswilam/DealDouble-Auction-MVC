@@ -26,6 +26,11 @@ namespace DealDouble.Web.ViewModels
         public DateTime StartingTime { get; set; }
         public DateTime EndingTime { get; set; }
 
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
         public string AuctionPictures { get; set; }
+
+        public List<Category> Categories { get; set; }
     }
 }
