@@ -16,5 +16,8 @@ namespace DealDouble.Entities
 
         //nav props
         public List<AuctionPicture> AuctionPictures { get; set; }
+
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
