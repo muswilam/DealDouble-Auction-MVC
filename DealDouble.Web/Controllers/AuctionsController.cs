@@ -28,9 +28,6 @@ namespace DealDouble.Web.Controllers
         {
             var auctionsModel = new AuctionsListingViewModel();
 
-            auctionsModel.PageTitle = "Auctions";
-            auctionsModel.PageDescription = "Auctions listing page.";
-
             auctionsModel.AllAuctions = auctionService.GetAuctions();
 
             return PartialView(auctionsModel);

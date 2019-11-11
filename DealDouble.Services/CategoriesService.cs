@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace DealDouble.Services
 {
@@ -14,7 +15,7 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            return context.Categories.ToList();
+            return context.Categories.Include(c => c.Auctions).ToList();
         }
 
     }

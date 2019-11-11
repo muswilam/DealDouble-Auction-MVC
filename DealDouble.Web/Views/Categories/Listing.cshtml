@@ -1,0 +1,35 @@
+﻿@model CategoriesListingViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Auctions</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.AllCategories)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                @if (category.Auctions != null && category.Auctions.Count() > 0)
+                {
+                    <td>@category.Auctions.Count()</td>
+                }
+                else
+                {
+                    <td>0</td>
+                }
+                <td>
+                    <button data-id="@category.Id" class="editBtn btn btn-info">Edit</button>
+                    <button data-id="@category.Id" class="deleteBtn btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
