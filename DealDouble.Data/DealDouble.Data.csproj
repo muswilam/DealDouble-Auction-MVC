@@ -65,6 +65,10 @@
     <Compile Include="Migrations\201911101202145_CreateCategoriesTable.Designer.cs">
       <DependentUpon>201911101202145_CreateCategoriesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111902555_AuctionsTableValidation.cs" />
+    <Compile Include="Migrations\201911111902555_AuctionsTableValidation.Designer.cs">
+      <DependentUpon>201911111902555_AuctionsTableValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -92,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911101202145_CreateCategoriesTable.resx">
       <DependentUpon>201911101202145_CreateCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111902555_AuctionsTableValidation.resx">
+      <DependentUpon>201911111902555_AuctionsTableValidation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

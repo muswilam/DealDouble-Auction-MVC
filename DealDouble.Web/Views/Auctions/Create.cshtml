@@ -1,4 +1,4 @@
-﻿@model CreateAuctionViewModel
+﻿@model AuctionViewModel
 
 <div class="modal-header">
     <h5 class="modal-title">Create Auction</h5>
@@ -11,7 +11,7 @@
     <div class="modal-body">
         <div class="form-group">
             <label for="Title">Title</label>
-            <input type="text" class="form-control" name="Title" id="Title" />
+            <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title"/>
         </div>
 
         <div class="form-group">
@@ -26,22 +26,22 @@
 
         <div class="form-group">
             <label for="Description">Description</label>
-            <input type="text" class="form-control" name="Description" id="Description" />
+            <input type="text" class="form-control" name="Description" id="Description" value="@Model.Description" />
         </div>
 
         <div class="form-group">
             <label for="ActualPrice">Actual Price</label>
-            <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" />
+            <input type="number" class="form-control" name="ActualPrice" id="ActualPrice" value="@Model.ActualPrice" />
         </div>
 
         <div class="form-group">
             <label for="StartingTime">Starting Time</label>
-            <input type="text" class="form-control" name="StartingTime" id="StartingTime" />
+            <input type="text" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime" />
         </div>
 
         <div class="form-group">
             <label for="EndingTime">Ending Time</label>
-            <input type="text" class="form-control" name="EndingTime" id="EndingTime" />
+            <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="@Model.EndingTime" />
         </div>
 
         <div class="form-group">
@@ -49,6 +49,9 @@
             <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" multiple/>
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea"></div>
+        </div>
+
+        <div id="divError" class="form-group alert alert-danger" style="display:none;">
         </div>
 
     </div>
@@ -76,8 +79,14 @@
             type: 'Post',
             data: $("#createForm").serialize(),
         }).done(function (response) {
-            $("#listingArea").html(response);
-            $("#formModal").modal("toggle"); //to dismiss modal after finish
+            debugger;
+            if (response.success) {
+                ReloadListing()
+                $("#formModal").modal("toggle"); //to dismiss modal after finish
+            } else {
+                $("#divError").html(response.message);
+                $("#divError").show();
+            }
         }).fail(function () {
             alert("Fail");
         });

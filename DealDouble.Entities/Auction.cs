@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DealDouble.Entities
 {
     public class Auction : BaseEntity
     {
+        [Required, MinLength(15), MaxLength(150)]
         public string Title { get; set; }
+
         public string Description { get; set; }
+
+        [Required, Range(10, 1000000)]
         public decimal ActualPrice { get; set; }
-        public DateTime StartingTime { get; set; }
-        public DateTime EndingTime { get; set; }
+
+        public DateTime? StartingTime { get; set; }
+        public DateTime? EndingTime { get; set; }
 
         //nav props
         public List<AuctionPicture> AuctionPictures { get; set; }

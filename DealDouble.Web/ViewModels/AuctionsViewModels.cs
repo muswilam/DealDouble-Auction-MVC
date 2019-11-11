@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DealDouble.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace DealDouble.Web.ViewModels
 {
-    public class AuctionViewModel : PageViewModel
+    public class AuctionDetailsViewModel : PageViewModel
     {
         public Auction Auction { get; set; }
     }
@@ -31,30 +32,19 @@ namespace DealDouble.Web.ViewModels
         public List<Auction> PromotedAuctions { get; set; }
     }
 
-    public class CreateAuctionViewModel : PageViewModel
-    {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public decimal ActualPrice { get; set; }
-        public DateTime StartingTime { get; set; }
-        public DateTime EndingTime { get; set; }
-
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
-
-        public string AuctionPictures { get; set; }
-
-        public List<Category> Categories { get; set; }
-    }
-
-    public class EditAuctionViewModel : PageViewModel
+    public class AuctionViewModel : PageViewModel
     {
         public int Id { get; set; }
+
+        [Required, MinLength(15), MaxLength(150)]
         public string Title { get; set; }
         public string Description { get; set; }
+
+        [Range(10, 1000000)]
         public decimal ActualPrice { get; set; }
-        public DateTime StartingTime { get; set; }
-        public DateTime EndingTime { get; set; }
+
+        public DateTime? StartingTime { get; set; }
+        public DateTime? EndingTime { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }

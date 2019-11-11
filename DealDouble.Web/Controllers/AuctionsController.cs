@@ -48,7 +48,7 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = new CreateAuctionViewModel();
+            var model = new AuctionViewModel();
 
             model.Categories = catService.GetCategories();
 
@@ -56,46 +56,58 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateAuctionViewModel auctionModel)
+        public JsonResult Create(AuctionViewModel auctionModel)
         {
-            Auction newAuction = new Auction();
+            JsonResult result = new JsonResult();
 
-            newAuction.Title = auctionModel.Title;
-            newAuction.Description = auctionModel.Description;
-            newAuction.ActualPrice = auctionModel.ActualPrice;
-            newAuction.StartingTime = auctionModel.StartingTime;
-            newAuction.EndingTime = auctionModel.EndingTime;
-            newAuction.CategoryId = auctionModel.CategoryId;
-
-            //check if we have aictionpictureIds back from form 
-            if (!String.IsNullOrEmpty(auctionModel.AuctionPictures))
+            if (ModelState.IsValid)
             {
-                var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
 
-                newAuction.AuctionPictures = new List<AuctionPicture>();
-                newAuction.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture() { PictureId = pi }));
+                Auction newAuction = new Auction();
 
-                #region Same functionality for adding auction pictures
-                /*foreach (var picId in pictureIds)
+                newAuction.Title = auctionModel.Title;
+                newAuction.Description = auctionModel.Description;
+                newAuction.ActualPrice = auctionModel.ActualPrice;
+                newAuction.StartingTime = auctionModel.StartingTime;
+                newAuction.EndingTime = auctionModel.EndingTime;
+                newAuction.CategoryId = auctionModel.CategoryId;
+
+                //check if we have aictionpictureIds back from form 
+                if (!String.IsNullOrEmpty(auctionModel.AuctionPictures))
+                {
+                    var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
+
+                    newAuction.AuctionPictures = new List<AuctionPicture>();
+                    newAuction.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture() { PictureId = pi }));
+
+                    #region Same functionality for adding auction pictures
+                    /*foreach (var picId in pictureIds)
             {
                 var auctionPicture = new AuctionPicture();
                 auctionPicture.PictureId = picId;
                 newAuction.AuctionPictures.Add(auctionPicture);
             } */
-                #endregion
+                    #endregion
 
+                }
+
+
+                auctionService.SaveAuction(newAuction);
+
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid inputs." };
             }
 
-
-            auctionService.SaveAuction(newAuction);
-
-            return RedirectToAction("Listing");
+            return result;
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = new EditAuctionViewModel();
+            var model = new AuctionViewModel();
 
             model.Auction = auctionService.GetAuction(id);
             model.Categories = catService.GetCategories();
@@ -104,7 +116,7 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(EditAuctionViewModel auctionModel)
+        public ActionResult Edit(AuctionViewModel auctionModel)
         {
             var auctionFromDb = auctionService.GetAuction(auctionModel.Id);
 
@@ -136,7 +148,7 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var model = new AuctionViewModel();
+            var model = new AuctionDetailsViewModel();
 
             model.Auction = auctionService.GetAuction(id);
 
