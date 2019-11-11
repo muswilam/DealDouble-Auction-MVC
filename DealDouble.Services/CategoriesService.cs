@@ -11,6 +11,7 @@ namespace DealDouble.Services
 {
     public class CategoriesService
     {
+        //read list of categories
         public List<Category> GetCategories()
         {
             var context = new DealDoubleContext();
@@ -18,5 +19,13 @@ namespace DealDouble.Services
             return context.Categories.Include(c => c.Auctions).ToList();
         }
 
+        //create new category 
+        public void SaveCategory(Category category)
+        {
+            var context = new DealDoubleContext();
+
+            context.Categories.Add(category);
+            context.SaveChanges();
+        }
     }
 }

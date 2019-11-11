@@ -32,4 +32,25 @@
     </tbody>
 </table>
 
+<script>
+    $(".editBtn").click(function () {
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url: '@Url.Action("Edit","Categories")',
+            method: 'Get',
+            data: {
+                id: id,
+            }
+        })
+        .done(function (response) {
+            $("#formModal").modal("toggle");
+            $("#actionArea").html(response);
+        })
+    });
 
+    $(".deleteBtn").click(function () {
+        $("#deleteModal").modal("toggle");
+        $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
+    });
+
+</script>
