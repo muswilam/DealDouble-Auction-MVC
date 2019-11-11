@@ -14,6 +14,14 @@ namespace DealDouble.Web.ViewModels
     public class AuctionsListingViewModel : PageViewModel
     {
         public List<Auction> AllAuctions { get; set; }
+
+        public Pager Pager { get; set; }
+
+        public int? CategoryId { get; set; }
+        public string SearchTerm { get; set; }
+        public int? PageNo { get; set; }
+
+        public List<Category> Categories { get; set; }
     }
 
     public class AuctionsViewModel : PageViewModel

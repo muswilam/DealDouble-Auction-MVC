@@ -14,21 +14,33 @@ namespace DealDouble.Web.Controllers
         AuctionsService auctionService = new AuctionsService();
         CategoriesService catService = new CategoriesService();
 
-        public ActionResult Index()
+        public ActionResult Index(int? categoryId, string searchTerm, int? pageNo)
         {
             var auctionsModel = new AuctionsListingViewModel();
 
             auctionsModel.PageTitle = "Auctions";
             auctionsModel.PageDescription = "Auctions listing page.";
 
+            auctionsModel.CategoryId = categoryId;
+            auctionsModel.SearchTerm = searchTerm;
+            auctionsModel.PageNo = pageNo;
+
+            auctionsModel.Categories = catService.GetCategories();
+
             return View(auctionsModel);
         }
 
-        public PartialViewResult Listing()
+        public PartialViewResult Listing(int? categoryId, string searchTerm, int? pageNo)
         {
+            var pageSize = 5;
+
             var auctionsModel = new AuctionsListingViewModel();
 
-            auctionsModel.AllAuctions = auctionService.GetAuctions();
+            auctionsModel.AllAuctions = auctionService.FilterAuctions(categoryId, searchTerm, pageNo, pageSize);
+
+            var totalAuctions = auctionService.GetAuctionsCount();
+
+            auctionsModel.Pager = new Pager(totalAuctions,pageNo, pageSize);
 
             return PartialView(auctionsModel);
         }
