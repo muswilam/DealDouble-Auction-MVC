@@ -19,6 +19,14 @@ namespace DealDouble.Services
             return context.Categories.Include(c => c.Auctions).ToList();
         }
 
+        //read cattegory by Id
+        public Category GetCategory(int id)
+        {
+            var context = new DealDoubleContext();
+
+            return context.Categories.Include(c => c.Auctions).Where(c => c.Id == id).First();
+        }
+
         //create new category 
         public void SaveCategory(Category category)
         {
@@ -27,5 +35,16 @@ namespace DealDouble.Services
             context.Categories.Add(category);
             context.SaveChanges();
         }
+
+        //update existing category
+        public void UpdateCategory(Category category)
+        {
+            var context = new DealDoubleContext();
+
+            context.Entry(category).State = EntityState.Modified;
+
+            context.SaveChanges();
+        }
+   
     }
 }

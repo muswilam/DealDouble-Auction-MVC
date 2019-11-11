@@ -50,5 +50,29 @@ namespace DealDouble.Web.Controllers
 
             return RedirectToAction("Listing");
         }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model = new CategoryViewModel();
+
+            model.Category = catService.GetCategory(id);
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(CategoryViewModel categoryModel)
+        {
+            var categoryFromDb = catService.GetCategory(categoryModel.Id);
+
+            categoryFromDb.Name = categoryModel.Name;
+            categoryFromDb.Description = categoryModel.Description;
+
+            catService.UpdateCategory(categoryFromDb);
+
+            return RedirectToAction("Listing");
+        }
+
     }
 }

@@ -30,6 +30,8 @@ namespace DealDouble.Web.ViewModels
         public string Description { get; set; }
 
         public List<Auction> Auctions { get; set; }
+
+        public Category Category { get; set; }
     }
 
 }
