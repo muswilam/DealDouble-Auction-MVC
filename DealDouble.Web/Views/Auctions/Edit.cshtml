@@ -46,7 +46,7 @@
             <label for="EndingTime">Ending Time</label>
             <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="@Model.Auction.EndingTime" />
         </div>
-
+  
         <div class="form-group">
             <label for="selectPictures">Select Pictures</label>
             <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" multiple />
@@ -62,6 +62,9 @@
             </div>
         </div>
 
+        <div id="divError" class="form-group alert alert-danger" style="display:none;">
+        </div>
+
     </div>
 
     <div class="modal-footer">
@@ -75,27 +78,62 @@
     //need to call remove functions to work in edit
     RemoveImageOnClick();
 
+    @* validate form *@
+    $("#editForm").validate({
+        rules: {
+            Title: {
+                required: true,
+                minlength: 15,
+                maxlength: 150
+            },
+            ActualPrice: {
+                required: true,
+                range: [1, 1000000]
+            }
+        },
+        messages: {
+            Title: {
+                required: "Title is rquired.",
+                minlength: "Minmum length is 15",
+                maxlength: "Maximum length is 150"
+            },
+            ActualPrice: {
+                required: "Actual price is required.",
+                range: "Invalid price."
+            }
+        },
+        errorClass: "text-danger"
+    })
+
     $("#updateBtn").click(function () {
-        var picIds = [];
+        if ($("#editForm").valid()) {
+            var picIds = [];
 
-        $("#picsArea .image").each(function () {
-            var picId = $(this).attr("data-id");
+            $("#picsArea .image").each(function () {
+                var picId = $(this).attr("data-id");
 
-            picIds.push(picId);
-        })
+                picIds.push(picId);
+            })
 
-        $("#pictureIds").val(picIds);
+            $("#pictureIds").val(picIds);
 
-        $.ajax({
-            url: '@Url.Action("Edit","Auctions")',
-            method: 'Post',
-            data: $("#editForm").serialize(),
-        }).done(function (response) {
-            $("#listingArea").html(response);
-            $("#formModal").modal("toggle"); //to dismiss modal after finish
-        }).fail(function () {
-            alert("Fail");
-        });
+            $.ajax({
+                url: '@Url.Action("Edit","Auctions")',
+                method: 'Post',
+                data: $("#editForm").serialize(),
+            }).done(function (response) {
+                debugger;
+                if (response.success) {
+                    ReloadListing(); //read the list of auctions after action on (edit)
+                    $("#formModal").modal("toggle"); //to dismiss modal after finish
+                } else {
+                    $("#divError").html(response.message);
+                    $("#divError").show();
+                }
+            }).fail(function () {
+                alert("Fail");
+            });
+        }
     })
 
     $("#selectPictures").change(function () {

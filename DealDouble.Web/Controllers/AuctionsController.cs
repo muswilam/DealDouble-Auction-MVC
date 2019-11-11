@@ -91,7 +91,6 @@ namespace DealDouble.Web.Controllers
 
                 }
 
-
                 auctionService.SaveAuction(newAuction);
 
                 result.Data = new { success = true };
@@ -116,33 +115,44 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(AuctionViewModel auctionModel)
+        public JsonResult Edit(AuctionViewModel auctionModel)
         {
-            var auctionFromDb = auctionService.GetAuction(auctionModel.Id);
+            JsonResult result = new JsonResult();
 
-            auctionFromDb.Title = auctionModel.Title;
-            auctionFromDb.Description = auctionModel.Description;
-            auctionFromDb.ActualPrice = auctionModel.ActualPrice;
-            auctionFromDb.StartingTime = auctionModel.StartingTime;
-            auctionFromDb.EndingTime = auctionModel.EndingTime;
-            auctionFromDb.CategoryId = auctionModel.CategoryId;
+            if (ModelState.IsValid)
+            {
+                var auctionFromDb = auctionService.GetAuction(auctionModel.Id);
 
-            //there's a BUG here (update auction pictures)
-            //check if we have aictionpictureIds back from form  
-            //if(!String.IsNullOrEmpty(auctionModel.AuctionPictures))
-            //{
-            //    var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
+                auctionFromDb.Title = auctionModel.Title;
+                auctionFromDb.Description = auctionModel.Description;
+                auctionFromDb.ActualPrice = auctionModel.ActualPrice;
+                auctionFromDb.StartingTime = auctionModel.StartingTime;
+                auctionFromDb.EndingTime = auctionModel.EndingTime;
+                auctionFromDb.CategoryId = auctionModel.CategoryId;
 
-            //    auctionFromDb.AuctionPictures = new List<AuctionPicture>();
-            //    auctionFromDb.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture()
-            //    {
-            //        PictureId = pi,
-            //    }));
-            //}
-           
-            auctionService.UpdateAuction(auctionFromDb);
+                //there's a BUG here (update auction pictures)
+                //check if we have aictionpictureIds back from form  
+                //if(!String.IsNullOrEmpty(auctionModel.AuctionPictures))
+                //{
+                //    var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
 
-            return RedirectToAction("Listing");
+                //    auctionFromDb.AuctionPictures = new List<AuctionPicture>();
+                //    auctionFromDb.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture()
+                //    {
+                //        PictureId = pi,
+                //    }));
+                //}
+
+                auctionService.UpdateAuction(auctionFromDb);
+
+                result.Data = new { success = true};
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid Inputs." };
+            }
+
+            return result;
         }
 
         [HttpGet]

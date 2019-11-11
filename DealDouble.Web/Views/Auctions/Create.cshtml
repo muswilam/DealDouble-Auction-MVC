@@ -108,9 +108,8 @@
                 type: 'Post',
                 data: $("#createForm").serialize(),
             }).done(function (response) {
-                debugger;
                 if (response.success) {
-                    ReloadListing()
+                    ReloadListing() //read the list of auctions after action on (create)
                     $("#formModal").modal("toggle"); //to dismiss modal after finish
                 } else {
                     $("#divError").html(response.message);

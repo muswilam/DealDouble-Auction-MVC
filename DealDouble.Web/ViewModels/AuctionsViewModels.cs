@@ -40,7 +40,7 @@ namespace DealDouble.Web.ViewModels
         public string Title { get; set; }
         public string Description { get; set; }
 
-        [Range(10, 1000000)]
+        [Range(1, 1000000)]
         public decimal ActualPrice { get; set; }
 
         public DateTime? StartingTime { get; set; }
