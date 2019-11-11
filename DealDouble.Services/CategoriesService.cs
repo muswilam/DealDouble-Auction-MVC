@@ -46,5 +46,14 @@ namespace DealDouble.Services
             context.SaveChanges();
         }
    
+        //delete category
+        public void DeleteCategory(Category category)
+        {
+            var context = new DealDoubleContext();
+
+            context.Entry(category).State = EntityState.Deleted;
+
+            context.SaveChanges();
+        }
     }
 }

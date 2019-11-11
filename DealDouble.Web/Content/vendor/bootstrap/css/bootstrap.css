@@ -1512,7 +1512,8 @@ pre code {
 }
 
 .table {
-  width: 100%;
+  width:100%;
+  max-width: 100%;
   margin-bottom: 1rem;
   color: #212529;
 }
@@ -1521,6 +1522,8 @@ pre code {
 .table td {
   padding: 0.75rem;
   vertical-align: top;
+  width: 30%; /*so important to make table wide and fit all columns, and nowrap too.*/
+  white-space: nowrap;
   border-top: 1px solid #dee2e6;
 }
 

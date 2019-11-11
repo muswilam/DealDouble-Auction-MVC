@@ -128,8 +128,8 @@ namespace DealDouble.Web.Controllers
 
             model.Auction = auctionService.GetAuction(id);
 
-            model.PageTitle = "Auction Details: " + model.Auction.Title;
-            model.PageDescription = "Description"; //model.Auction.Description.Substring(0, 10);
+            model.PageTitle = model.Auction.Title;
+            model.PageDescription = model.Auction.Description.Length > 10 ? model.Auction.Description.Substring(0, 10) : model.Auction.Description;
 
             return View(model);
         }
