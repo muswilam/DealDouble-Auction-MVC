@@ -14,7 +14,7 @@ namespace DealDouble.Entities
 
         public string Description { get; set; }
 
-        [Required, Range(10, 1000000)]
+        [Required, Range(1, 1000000)]
         public decimal ActualPrice { get; set; }
 
         public DateTime? StartingTime { get; set; }

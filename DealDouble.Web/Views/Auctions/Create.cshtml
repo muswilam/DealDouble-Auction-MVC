@@ -63,33 +63,63 @@
 
 
 <script>
-    $("#saveBtn").click(function () {
-        var picIds = [];
-
-        $("#picsArea .image").each(function () {
-            var picId = $(this).attr("data-id");
-
-            picIds.push(picId);
-        })
-
-        $("#pictureIds").val(picIds);
-
-        $.ajax({
-            url: '@Url.Action("Create","Auctions")',
-            type: 'Post',
-            data: $("#createForm").serialize(),
-        }).done(function (response) {
-            debugger;
-            if (response.success) {
-                ReloadListing()
-                $("#formModal").modal("toggle"); //to dismiss modal after finish
-            } else {
-                $("#divError").html(response.message);
-                $("#divError").show();
+    @* validate form *@
+    $("#createForm").validate({
+        rules: {
+            Title: {
+                required: true,
+                minlength: 15,
+                maxlength: 150
+            },
+            ActualPrice: {
+                required: true,
+                range: [1, 1000000]
             }
-        }).fail(function () {
-            alert("Fail");
-        });
+        },
+        messages: {
+            Title: {
+                required: "Title is rquired.",
+                minlength: "Minmum length is 15",
+                maxlength: "Maximum length is 150"
+            },
+            ActualPrice: {
+                required: "Actual price is required.",
+                range: "Invalid price."
+            }
+        },
+        errorClass: "text-danger"
+    })
+
+
+    $("#saveBtn").click(function () {
+       if ($("#createForm").valid()) {
+            var picIds = [];
+
+            $("#picsArea .image").each(function () {
+                var picId = $(this).attr("data-id");
+
+                picIds.push(picId);
+            })
+
+            $("#pictureIds").val(picIds);
+
+            $.ajax({
+                url: '@Url.Action("Create","Auctions")',
+                type: 'Post',
+                data: $("#createForm").serialize(),
+            }).done(function (response) {
+                debugger;
+                if (response.success) {
+                    ReloadListing()
+                    $("#formModal").modal("toggle"); //to dismiss modal after finish
+                } else {
+                    $("#divError").html(response.message);
+                    $("#divError").show();
+                }
+            }).fail(function () {
+                alert("Fail");
+            });
+        }
     })
 
     $("#selectPictures").change(function () {
