@@ -16,12 +16,12 @@
 
         <div class="row mb-3">
             <div class="col col-lg-12">
-                <form method="post">
+                <form id="controlForm">
                     <div class="input-group">
                         @if (Model.Categories != null && Model.Categories.Count() > 0)
                         {
                             <select class="form-control mr-1" name="categoryId" id="selectCategory">
-                                <option value="0">
+                                <option disabled selected>
                                     Select Category
                                 </option>
                                 @foreach (var category in Model.Categories)
@@ -33,9 +33,9 @@
                                 }
                             </select>
                         }
-                        <input type="text" name="searchTerm" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
+                        <input type="text" id="searchTxt" name="search" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
                         <div class="input-group-append" id="button-addon4">
-                            <button class="btn btn-outline-primary mr-1" type="submit">Search</button>
+                            <button class="btn btn-outline-primary mr-1" type="button" id="searchBtn">Search</button>
                             <a href="@Url.Action("Index","Auctions")" class="btn btn-outline-secondary mr-1">Reset</a>
                             <button class="action-btn btn btn-outline-success" id="createBtn" type="button">New</button>
                         </div>
@@ -92,6 +92,56 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <script>
+    //filter by category
+    $("#selectCategory").change(function () {
+        $.ajax({
+            url: '@Url.Action("Listing","Auctions")',
+            data: {
+                search: $("#searchTerm").val(),
+                categoryId: $("#selectCategory").val()
+            }
+        })
+        .done(function (response) {
+            $("#listingArea").html(response);
+        })
+        .fail(function () {
+            alert("Fail");
+        })
+    })
+
+    //search by click on search btn
+    $("#searchBtn").click(function () {
+        getAjaxSearh();
+    });
+
+    //search by press enter 
+    $("#controlForm").keypress(function (event) {
+        if(event.keyCode == 13) //13 is the keyCode for enter button 
+        {
+            getAjaxSearh();
+            return false;
+        }
+    });
+
+    //search fuction by ajax
+    function getAjaxSearh()
+    {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '@Url.Action("Listing","Auctions")',
+            data: {
+                categoryId: $("#categoryId").val(),
+                search: searchValue
+            }
+        })
+        .done(function (response) {
+            $("#listingArea").html(response);
+        })
+        .fail(function () {
+            alert('Fail');
+        });
+    };
+
     $("#createBtn").click(function () {
         $.ajax({
             url: '@Url.Action("Create","Auctions")',
@@ -103,6 +153,7 @@
         })
     });
 
+    //delete modal 
     $("#modalDeleteBtn").click(function () {
         var id = $(this).attr("data-id");
         $.ajax({
@@ -130,12 +181,14 @@
         RemoveImageOnClick();
     }
 
+    //delete image by pressing on it
     function RemoveImageOnClick() {
         $("#picsArea .image").click(function () {
             $(this).remove();
         });
     }
 
+    //get list of auctions  
     function ReloadListing() {
         $.ajax({
             url: '@Url.Action("Listing","Auctions")',

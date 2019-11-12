@@ -67,6 +67,9 @@
     </nav>
 }
 
+<input type="hidden" id="searchTerm" value="@Model.SearchTerm" />
+<input type="hidden" id="categoryId" value="@Model.CategoryId" />
+
 <script>
     $(".editBtn").click(function () {
         var id = $(this).attr("data-id");

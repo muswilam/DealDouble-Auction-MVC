@@ -14,7 +14,7 @@ namespace DealDouble.Web.Controllers
         AuctionsService auctionService = new AuctionsService();
         CategoriesService catService = new CategoriesService();
 
-        public ActionResult Index(int? categoryId, string searchTerm, int? pageNo)
+        public ActionResult Index(int? categoryId, string search, int? pageNo)
         {
             var auctionsModel = new AuctionsListingViewModel();
 
@@ -22,7 +22,7 @@ namespace DealDouble.Web.Controllers
             auctionsModel.PageDescription = "Auctions listing page.";
 
             auctionsModel.CategoryId = categoryId;
-            auctionsModel.SearchTerm = searchTerm;
+            auctionsModel.SearchTerm = search;
             auctionsModel.PageNo = pageNo;
 
             auctionsModel.Categories = catService.GetCategories();
@@ -30,18 +30,21 @@ namespace DealDouble.Web.Controllers
             return View(auctionsModel);
         }
 
-        public PartialViewResult Listing(int? categoryId, string searchTerm, int? pageNo)
+        public PartialViewResult Listing(int? categoryId, string search, int? pageNo)
         {
             var pageSize = 5;
             pageNo = pageNo ?? 1;
 
             var auctionsModel = new AuctionsListingViewModel();
 
-            auctionsModel.AllAuctions = auctionService.FilterAuctions(categoryId, searchTerm, pageNo.Value, pageSize);
+            auctionsModel.AllAuctions = auctionService.FilterAuctions(categoryId, search, pageNo.Value, pageSize);
 
-            var totalAuctions = auctionService.GetAuctionsCount(categoryId, searchTerm);
+            var totalAuctions = auctionService.GetAuctionsCount(categoryId, search);
 
             auctionsModel.Pager = new Pager(totalAuctions,pageNo, pageSize);
+
+            auctionsModel.CategoryId = categoryId;
+            auctionsModel.SearchTerm = search;
 
             return PartialView(auctionsModel);
         }
