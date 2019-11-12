@@ -17,7 +17,7 @@
                 <td>@category.Description</td>
                 @if (category.Auctions != null && category.Auctions.Count() > 0)
                 {
-                    <td>@category.Auctions.Count()</td>
+                    <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
                 }
                 else
                 {

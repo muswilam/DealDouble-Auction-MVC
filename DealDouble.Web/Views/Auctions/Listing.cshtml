@@ -46,13 +46,17 @@
             }
             else
             {
-                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = Model.Pager.CurrentPage - 1, categoryId = Model.CategoryId, searchTerm = Model.SearchTerm })">Previous</a></li>
+                <li class="page-item">
+                    <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Auctions", new { pageNo = Model.Pager.CurrentPage - 1, categoryId = Model.CategoryId, search = Model.SearchTerm })" style="cursor:pointer">Previous</a>
+                </li>
             }
 
             @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
             {
                 var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
-                <li class="page-item @active"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = page, categoryId = Model.CategoryId, searchTerm = Model.SearchTerm})">@page</a></li>
+                <li class="page-item @active">
+                    <a class="pageDataLink page-link" data-href="@Url.Action("Listing", "Auctions", new { pageNo = page, categoryId = Model.CategoryId, search = Model.SearchTerm })" style="cursor:pointer">@page</a>
+                </li>
             }
 
             @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
@@ -61,7 +65,9 @@
             }
             else
             {
-                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = Model.Pager.CurrentPage + 1, categoryId = Model.CategoryId, searchTerm = Model.SearchTerm })">Next</a></li>
+                <li class="page-item">
+                    <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Auctions", new { pageNo = Model.Pager.CurrentPage + 1, categoryId = Model.CategoryId, search = Model.SearchTerm })" style="cursor:pointer">Next</a>
+                </li>
             }
         </ul>
     </nav>
@@ -89,6 +95,22 @@
     $(".deleteBtn").click(function () {
         $("#deleteModal").modal("toggle");
         $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
+    });
+
+    //pagination 
+    $(".pageDataLink").click(function () {
+        debugger;
+        var url = $(this).attr("data-href");
+
+        $.ajax({
+            url: url
+        })
+        .done(function (response) {
+            $("#listingArea").html(response);
+        })
+        .fail(function () {
+            alert("Fail");
+        })
     });
 </script>
 

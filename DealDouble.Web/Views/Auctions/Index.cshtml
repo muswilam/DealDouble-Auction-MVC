@@ -21,7 +21,7 @@
                         @if (Model.Categories != null && Model.Categories.Count() > 0)
                         {
                             <select class="form-control mr-1" name="categoryId" id="selectCategory">
-                                <option disabled selected>
+                                <option value="0" disabled selected>
                                     Select Category
                                 </option>
                                 @foreach (var category in Model.Categories)
@@ -35,9 +35,9 @@
                         }
                         <input type="text" id="searchTxt" name="search" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
                         <div class="input-group-append" id="button-addon4">
-                            <button class="btn btn-outline-primary mr-1" type="button" id="searchBtn">Search</button>
-                            <a href="@Url.Action("Index","Auctions")" class="btn btn-outline-secondary mr-1">Reset</a>
-                            <button class="action-btn btn btn-outline-success" id="createBtn" type="button">New</button>
+                            <button id="searchBtn" class=" btn btn-outline-primary mr-1" type="button">Search</button>
+                            <button id="resetBtn" class="btn btn-outline-secondary mr-1" type="button">Reset</button>
+                            <button id="createBtn" class="action-btn btn btn-outline-success" type="button">New</button>
                         </div>
                     </div>
                 </form>
@@ -141,6 +141,14 @@
             alert('Fail');
         });
     };
+
+    //reset 
+    $("#resetBtn").click(function () {
+        debugger;
+        ReloadListing();
+        $("#searchTxt").val('');
+        $("#selectCategory").val('0');
+    })
 
     $("#createBtn").click(function () {
         $.ajax({
