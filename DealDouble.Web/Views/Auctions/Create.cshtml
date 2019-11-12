@@ -45,8 +45,8 @@
         </div>
 
         <div class="form-group">
-            <label for="selectPictures">Select Pictures</label>
-            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" multiple/>
+            <label for="selectPictures" class="btn btn-warning" style="cursor:pointer">Select Pictures <span id="fileLength" class="badge badge-warning p-1" style="display:none"></span></label>
+            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" style="display:none" multiple="multiple"/>
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea"></div>
         </div>
@@ -154,11 +154,17 @@
     })
 
     $("#selectPictures").change(function () {
-        debugger;
         var pictures = this.files;
+        var picsLength = pictures.length;
+
+        if (pictures.length > 10) {
+            alert("Not allowed to upload more than 10 pictures in one time.");
+            picsLength = 10;
+        }
+        
         var picsData = new FormData();
 
-        for (var i = 0; i < pictures.length; i++) {
+        for (var i = 0; i < picsLength; i++) {
             picsData.append("Picture", pictures[i]);
         }
 
@@ -174,10 +180,11 @@
 
                 AttachNewImage(picResponse.id, picResponse.url);
             }
+            $("#fileLength").append(picsLength + " files uploaded.");
+            $("#fileLength").show();
         }).fail(function () {
             alert("Fail");
         });
     })
-
  
 </script>
