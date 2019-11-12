@@ -131,18 +131,18 @@ namespace DealDouble.Web.Controllers
                 auctionFromDb.EndingTime = auctionModel.EndingTime;
                 auctionFromDb.CategoryId = auctionModel.CategoryId;
 
-                //there's a BUG here (update auction pictures)
-                //check if we have aictionpictureIds back from form  
-                //if(!String.IsNullOrEmpty(auctionModel.AuctionPictures))
-                //{
-                //    var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
+                //check if we have auctionPictureIds back from form  
+                if (!String.IsNullOrEmpty(auctionModel.AuctionPictures))
+                {
+                    var pictureIds = auctionModel.AuctionPictures.Split(',').Select(int.Parse);
 
-                //    auctionFromDb.AuctionPictures = new List<AuctionPicture>();
-                //    auctionFromDb.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture()
-                //    {
-                //        PictureId = pi,
-                //    }));
-                //}
+                    auctionFromDb.AuctionPictures = new List<AuctionPicture>(); //empty auctionPicture object before modified
+                    auctionFromDb.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture()
+                    {
+                        PictureId = pi,
+                        AuctionId = auctionFromDb.Id //prevent create new auction
+                    }).ToList());
+                }
 
                 auctionService.UpdateAuction(auctionFromDb);
 

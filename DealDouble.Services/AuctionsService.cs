@@ -87,7 +87,13 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            context.Entry(auction).State = EntityState.Modified;
+            var existingAuction = context.Auctions.Where(a => a.Id == auction.Id).Include(a => a.AuctionPictures).First();
+
+            context.AuctionPictures.RemoveRange(existingAuction.AuctionPictures); //delete existing pics 
+
+            context.Entry(existingAuction).CurrentValues.SetValues(auction); //update all old values to newest except : navigation objects like pics
+
+            context.AuctionPictures.AddRange(auction.AuctionPictures); //add new pics
 
             context.SaveChanges();
         }

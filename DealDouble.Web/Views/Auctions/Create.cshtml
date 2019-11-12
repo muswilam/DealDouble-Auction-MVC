@@ -36,12 +36,12 @@
 
         <div class="form-group">
             <label for="StartingTime">Starting Time</label>
-            <input type="text" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime" />
+            <input type="text" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime" readonly />
         </div>
 
         <div class="form-group">
             <label for="EndingTime">Ending Time</label>
-            <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="@Model.EndingTime" />
+            <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="" readonly />
         </div>
 
         <div class="form-group">
@@ -63,6 +63,38 @@
 
 
 <script>
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+
+    var currentDate = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' + d.getFullYear();
+
+    $('input[name="StartingTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
+    $('input[name="EndingTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
     @* validate form *@
     $("#createForm").validate({
         rules: {
