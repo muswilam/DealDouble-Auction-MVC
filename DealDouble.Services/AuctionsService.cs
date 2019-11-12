@@ -21,7 +21,7 @@ namespace DealDouble.Services
         }
 
         //get auctions by filtering them using search, category, and page no
-        public List<Auction> FilterAuctions(int? categoryId, string searchTerm, int? pageNo, int pageSize)
+        public List<Auction> FilterAuctions(int? categoryId, string searchTerm, int pageNo, int pageSize)
         {
             var context = new DealDoubleContext();
 
@@ -37,17 +37,28 @@ namespace DealDouble.Services
                 auction = auction.Where(x => x.Title.ToLower().Contains(searchTerm.ToLower()));
             }
 
-            pageNo = pageNo ?? 1;
-            int skipCount = pageSize * ( pageNo.Value - 1);
+            int skipCount = pageSize * ( pageNo - 1);
 
             return auction.OrderByDescending(a => a.Id).Skip(skipCount).Take(pageSize).ToList();
         }
 
-        public int GetAuctionsCount()
+        public int GetAuctionsCount(int? categoryId, string searchTerm)
         {
             var context = new DealDoubleContext();
 
-            return context.Auctions.Count();
+            var auction = context.Auctions.Include(a => a.Category).AsQueryable();
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                auction = auction.Where(x => x.CategoryId == categoryId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                auction = auction.Where(x => x.Title.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return auction.Count();
         }
 
         public List<Auction> GetPromotedAuctions()

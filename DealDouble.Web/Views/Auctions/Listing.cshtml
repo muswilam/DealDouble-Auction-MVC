@@ -1,5 +1,6 @@
 ﻿@model AuctionsListingViewModel
 
+
 <table class="table table-hover">
     <thead>
         <tr>
@@ -10,22 +11,32 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var auction in Model.AllAuctions)
+        @if (Model.AllAuctions != null && Model.AllAuctions.Count() > 0)
+        {
+
+            foreach (var auction in Model.AllAuctions)
+            {
+                <tr>
+                    <td>@auction.Title</td>
+                    <td>@auction.Category.Name</td>
+                    <td>$@auction.ActualPrice</td>
+                    <td>
+                        <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
+                        <button data-id="@auction.Id" class="deleteBtn btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@auction.Title</td>
-                <td>@auction.Category.Name</td>
-                <td>$@auction.ActualPrice</td>
-                <td>
-                    <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
-                    <button data-id="@auction.Id" class="deleteBtn btn btn-danger">Delete</button>
-                </td>
+                <td colspan="4" class="text-center alert alert-danger">No auctions found.</td>
             </tr>
         }
     </tbody>
 </table>
 
-@if (Model.Pager != null && Model.Pager.TotalPages > 0)
+@if (Model.Pager != null && Model.Pager.TotalPages > 1)
 {
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
@@ -35,13 +46,13 @@
             }
             else
             {
-                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = Model.Pager.CurrentPage - 1})">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = Model.Pager.CurrentPage - 1, categoryId = Model.CategoryId, searchTerm = Model.SearchTerm })">Previous</a></li>
             }
 
-            @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage +1; page++)
+            @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
             {
                 var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
-                <li class="page-item @active"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = page})">@page</a></li>
+                <li class="page-item @active"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = page, categoryId = Model.CategoryId, searchTerm = Model.SearchTerm})">@page</a></li>
             }
 
             @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
@@ -50,7 +61,7 @@
             }
             else
             {
-                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = Model.Pager.CurrentPage + 1})">Next</a></li>
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Auctions", new { pageNo = Model.Pager.CurrentPage + 1, categoryId = Model.CategoryId, searchTerm = Model.SearchTerm })">Next</a></li>
             }
         </ul>
     </nav>

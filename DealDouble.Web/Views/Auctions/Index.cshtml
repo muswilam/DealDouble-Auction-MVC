@@ -1,5 +1,9 @@
 ﻿@model AuctionsListingViewModel
 
+@{
+    var categoryId = Model.CategoryId.HasValue ? Model.CategoryId.Value : 0;
+}
+
 <div class="row">
     <div class="col-lg-12 m-3">
 
@@ -12,23 +16,24 @@
 
         <div class="row mb-3">
             <div class="col col-lg-12">
-                <form>
+                <form method="post">
                     <div class="input-group">
                         @if (Model.Categories != null && Model.Categories.Count() > 0)
                         {
-                            <select class="form-control mr-1" name="selectCategory" id="selectCategory">
+                            <select class="form-control mr-1" name="categoryId" id="selectCategory">
                                 <option value="0">
                                     Select Category
                                 </option>
                                 @foreach (var category in Model.Categories)
                                 {
-                                    <option value="@category.Id" @(Model.CategoryId == category.Id ? "selected" : string.Empty)>
+                                    var selected = category.Id == categoryId ? "selected" : string.Empty;
+                                    <option value="@category.Id" @selected>
                                         @category.Name
                                     </option>
                                 }
                             </select>
                         }
-                        <input type="text" name="searchTxt" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
+                        <input type="text" name="searchTerm" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
                         <div class="input-group-append" id="button-addon4">
                             <button class="btn btn-outline-primary mr-1" type="submit">Search</button>
                             <a href="@Url.Action("Index","Auctions")" class="btn btn-outline-secondary mr-1">Reset</a>

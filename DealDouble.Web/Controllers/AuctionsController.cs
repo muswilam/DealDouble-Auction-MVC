@@ -33,12 +33,13 @@ namespace DealDouble.Web.Controllers
         public PartialViewResult Listing(int? categoryId, string searchTerm, int? pageNo)
         {
             var pageSize = 5;
+            pageNo = pageNo ?? 1;
 
             var auctionsModel = new AuctionsListingViewModel();
 
-            auctionsModel.AllAuctions = auctionService.FilterAuctions(categoryId, searchTerm, pageNo, pageSize);
+            auctionsModel.AllAuctions = auctionService.FilterAuctions(categoryId, searchTerm, pageNo.Value, pageSize);
 
-            var totalAuctions = auctionService.GetAuctionsCount();
+            var totalAuctions = auctionService.GetAuctionsCount(categoryId, searchTerm);
 
             auctionsModel.Pager = new Pager(totalAuctions,pageNo, pageSize);
 
