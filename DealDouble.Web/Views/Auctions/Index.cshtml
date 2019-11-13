@@ -193,6 +193,10 @@
     function RemoveImageOnClick() {
         $("#picsArea .image").click(function () {
             $(this).remove();
+            $("#existFileLength").empty(); //empty existing pictures count in edit
+            $("#fileLength").empty(); //empty old count
+            $("#fileLength").show(); //show element in edit 
+            $("#fileLength").append($("#picsArea .image").length + " pictures. "); //append new count value
         });
     }
 
@@ -206,7 +210,6 @@
             $("#listingArea").html(response);
         })
     }
-
 </script>
 
 

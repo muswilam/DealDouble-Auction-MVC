@@ -11,7 +11,7 @@
     <div class="modal-body">
         <div class="form-group">
             <label for="Title">Title</label>
-            <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title"/>
+            <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title" />
         </div>
 
         <div class="form-group">
@@ -45,8 +45,13 @@
         </div>
 
         <div class="form-group">
-            <label for="selectPictures" class="btn btn-warning" style="cursor:pointer">Select Pictures <span id="fileLength" class="badge badge-warning p-1" style="display:none"></span></label>
-            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" style="display:none" multiple="multiple"/>
+            <label for="selectPictures" class="btn btn-warning" style="cursor:pointer">
+                Select Pictures
+                <span id="fileLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
+            <span class="float-right badge badge-pill p-1 mt-2">Press on pic to remove it</span>
+
+            <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" style="display:none" multiple="multiple" />
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea"></div>
         </div>
@@ -180,7 +185,19 @@
 
                 AttachNewImage(picResponse.id, picResponse.url);
             }
-            $("#fileLength").append(picsLength + " files uploaded.");
+
+            //print length of pictures, if exsist one override it.
+            var oldLength;
+            var newLength;
+            if ($("#fileLength").text()) {
+                oldLength = $("#fileLength").text()[0];
+                newLength = parseFloat(oldLength) + parseFloat(picsLength);
+                $("#fileLength").empty();
+            } else {
+                newLength = picsLength; //first time
+            }
+
+            $("#fileLength").append(newLength + " pictures. ");
             $("#fileLength").show();
         }).fail(function () {
             alert("Fail");

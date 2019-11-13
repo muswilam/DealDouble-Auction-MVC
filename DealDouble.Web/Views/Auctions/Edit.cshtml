@@ -46,9 +46,18 @@
             <label for="EndingTime">Ending Time</label>
             <input type="text" class="form-control" name="EndingTime" id="EndingTime" value="@Model.Auction.EndingTime" />
         </div>
-  
+
         <div class="form-group">
-            <label for="selectPictures" class="btn btn-warning" style="cursor:pointer">Select Pictures <span id="fileLength" class="badge badge-warning p-1" style="display:none"></span></label>
+            <label for="selectPictures" class="btn btn-warning" style="cursor:pointer">
+                Select Pictures
+                @if (Model.Auction.AuctionPictures != null && Model.Auction.AuctionPictures.Count() > 0)
+                {
+                    <span id="existFileLength" class="badge badge-warning p-1">@Model.Auction.AuctionPictures.Count pictures.</span>
+                }
+                <span id="fileLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
+            <span class="float-right badge badge-pill p-1 mt-2">Press on pic to remove it</span>
+
             <input type="file" class="form-control" name="AuctionPictures" id="selectPictures" style="display:none" multiple />
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea">
@@ -197,7 +206,26 @@
 
                 AttachNewImage(picResponse.id, picResponse.url);
             }
-            $("#fileLength").append(picsLength + " files uploaded.");
+
+            debugger;
+            var oldLength;
+            var newLength;
+            if ($("#existFileLength").text()) //exist pics from db.
+            {
+                oldLength = $("#existFileLength").text()[0];
+                newLength = parseFloat(oldLength) + parseFloat(picsLength);
+
+            } else if ($("#fileLength").text()) //exist pics uploaded.
+            {
+                oldLength = $("#fileLength").text()[0];
+                newLength = parseFloat(oldLength) + parseFloat(picsLength);
+            } else {
+                newLength = picsLength; //first time.
+            }
+
+            $("#existFileLength").empty()
+            $("#fileLength").empty();
+            $("#fileLength").append(newLength + " pictures. ");
             $("#fileLength").show();
         }).fail(function () {
             alert("Fail");
