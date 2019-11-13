@@ -13,27 +13,31 @@ namespace DealDouble.Web.Controllers
     {
         CategoriesService catService = new CategoriesService();
 
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             var catsModel = new CategoriesListingViewModel();
 
             catsModel.PageTitle = "Categories";
             catsModel.PageDescription = "Categories listing page.";
 
+            catsModel.SearchTerm = search;
+
             return View(catsModel);
         }
 
-        public PartialViewResult Listing(int? pageNo)
+        public PartialViewResult Listing(string search, int? pageNo)
         {
             int pageSize = 5;
             pageNo = pageNo ?? 1;
 
             var catsModel = new CategoriesListingViewModel();
 
-            catsModel.AllCategories = catService.FilterCategories(pageNo.Value, pageSize); 
+            catsModel.AllCategories = catService.FilterCategories(search, pageNo.Value, pageSize); 
 
-            var totalCount = catService.GetCategoriesCount();
+            var totalCount = catService.GetCategoriesCount(search);
             catsModel.Pager = new Pager(totalCount, pageNo.Value, pageSize);
+
+            catsModel.SearchTerm = search;
 
             return PartialView(catsModel);
         }

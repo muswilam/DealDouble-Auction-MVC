@@ -20,22 +20,32 @@ namespace DealDouble.Services
         }
 
         //filter categories 
-        public List<Category> FilterCategories(int pageNo, int pageSize)
+        public List<Category> FilterCategories(string search, int pageNo, int pageSize)
         {
             var context = new DealDoubleContext();
 
             var categories = context.Categories.Include(c => c.Auctions).AsQueryable();
+
+            if(!string.IsNullOrEmpty(search))
+            {
+                categories = categories.Where(c => c.Name.ToLower().Contains(search.ToLower()));
+            }
 
             var skipCount = (pageNo - 1) * pageSize;
 
             return categories.OrderByDescending(c => c.Id).Skip(skipCount).Take(pageSize).ToList();
         }
 
-        public int GetCategoriesCount()
+        public int GetCategoriesCount(string search)
         {
             var context = new DealDoubleContext();
 
             var categories = context.Categories.AsQueryable();
+
+            if(!string.IsNullOrEmpty(search))
+            {
+                categories = categories.Where(c => c.Name.ToLower().Contains(search.ToLower()));
+            }
 
             return categories.Count();
         }

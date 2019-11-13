@@ -4,28 +4,39 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
+            <th>Descripion</th>
             <th>Auctions</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in Model.AllCategories)
+        @if (Model.AllCategories != null && Model.AllCategories.Count() > 0)
+        {
+            foreach (var category in Model.AllCategories)
+            {
+                <tr>
+                    <td>@category.Name</td>
+                    <td>@category.Description</td>
+                    @if (category.Auctions != null && category.Auctions.Count() > 0)
+                    {
+                        <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                    <td>
+                        <button data-id="@category.Id" class="editBtn btn btn-info">Edit</button>
+                        <button data-id="@category.Id" class="deleteBtn btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@category.Name</td>
-                <td>@category.Description</td>
-                @if (category.Auctions != null && category.Auctions.Count() > 0)
-                {
-                    <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
-                }
-                else
-                {
-                    <td>0</td>
-                }
-                <td>
-                    <button data-id="@category.Id" class="editBtn btn btn-info">Edit</button>
-                    <button data-id="@category.Id" class="deleteBtn btn btn-danger">Delete</button>
+                <td colspan="4" class="text-center alert alert-danger">
+                    No categories found.
                 </td>
             </tr>
         }
@@ -43,7 +54,7 @@
             else
             {
                 <li class="page-item">
-                    <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Categories", new { pageNo = Model.Pager.CurrentPage - 1 })" style="cursor:pointer">Previous</a>
+                    <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Categories", new { pageNo = Model.Pager.CurrentPage - 1, search = Model.SearchTerm })" style="cursor:pointer">Previous</a>
                 </li>
             }
 
@@ -51,7 +62,7 @@
             {
                 var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
                 <li class="page-item @active">
-                    <a class="pageDataLink page-link" data-href="@Url.Action("Listing", "Categories", new { pageNo = page})" style="cursor:pointer">@page</a>
+                    <a class="pageDataLink page-link" data-href="@Url.Action("Listing", "Categories", new { pageNo = page, search = Model.SearchTerm})" style="cursor:pointer">@page</a>
                 </li>
             }
 
@@ -62,7 +73,7 @@
             else
             {
                 <li class="page-item">
-                    <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Categories", new { pageNo = Model.Pager.CurrentPage + 1 })" style="cursor:pointer">Next</a>
+                    <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Categories", new { pageNo = Model.Pager.CurrentPage + 1, search = Model.SearchTerm })" style="cursor:pointer">Next</a>
                 </li>
             }
         </ul>
@@ -90,7 +101,7 @@
         $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
     });
 
-    //pagination 
+    //pagination
     $(".pageDataLink").click(function () {
         var url = $(this).attr("data-href");
 
