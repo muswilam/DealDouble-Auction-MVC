@@ -10,6 +10,8 @@ namespace DealDouble.Web.ViewModels
     public class CategoriesListingViewModel : PageViewModel
     {
         public List<Category> AllCategories { get; set; }
+
+        public Pager Pager { get; set; }
     }
 
     public class CateroriesViewModel : PageViewModel

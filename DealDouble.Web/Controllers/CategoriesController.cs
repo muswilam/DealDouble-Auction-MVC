@@ -23,11 +23,17 @@ namespace DealDouble.Web.Controllers
             return View(catsModel);
         }
 
-        public PartialViewResult Listing()
+        public PartialViewResult Listing(int? pageNo)
         {
+            int pageSize = 5;
+            pageNo = pageNo ?? 1;
+
             var catsModel = new CategoriesListingViewModel();
 
-            catsModel.AllCategories = catService.GetCategories();
+            catsModel.AllCategories = catService.FilterCategories(pageNo.Value, pageSize); 
+
+            var totalCount = catService.GetCategoriesCount();
+            catsModel.Pager = new Pager(totalCount, pageNo.Value, pageSize);
 
             return PartialView(catsModel);
         }

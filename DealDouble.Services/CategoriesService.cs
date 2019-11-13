@@ -19,6 +19,27 @@ namespace DealDouble.Services
             return context.Categories.Include(c => c.Auctions).ToList();
         }
 
+        //filter categories 
+        public List<Category> FilterCategories(int pageNo, int pageSize)
+        {
+            var context = new DealDoubleContext();
+
+            var categories = context.Categories.Include(c => c.Auctions).AsQueryable();
+
+            var skipCount = (pageNo - 1) * pageSize;
+
+            return categories.OrderByDescending(c => c.Id).Skip(skipCount).Take(pageSize).ToList();
+        }
+
+        public int GetCategoriesCount()
+        {
+            var context = new DealDoubleContext();
+
+            var categories = context.Categories.AsQueryable();
+
+            return categories.Count();
+        }
+
         //read cattegory by Id
         public Category GetCategory(int id)
         {
