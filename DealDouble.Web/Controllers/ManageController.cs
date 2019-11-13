@@ -7,30 +7,31 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DealDouble.Web.Models;
+using DealDouble.Services;
 
 namespace DealDouble.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private DealDoubleSignInManager _signInManager;
+        private DealDoubleUserManager _userManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(DealDoubleUserManager userManager, DealDoubleSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public DealDoubleSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<DealDoubleSignInManager>();
             }
             private set 
             { 
@@ -38,11 +39,11 @@ namespace DealDouble.Web.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public DealDoubleUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<DealDoubleUserManager>();
             }
             private set
             {

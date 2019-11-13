@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DealDouble.Web.ViewModels;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DealDouble.Web.Models
@@ -46,7 +47,7 @@ namespace DealDouble.Web.Models
         public string Email { get; set; }
     }
 
-    public class LoginViewModel
+    public class LoginViewModel : PageViewModel
     {
         [Required]
         [Display(Name = "Email")]
@@ -62,7 +63,7 @@ namespace DealDouble.Web.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterViewModel : PageViewModel
     {
         [Required]
         [EmailAddress]
