@@ -89,6 +89,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Bid.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="Comment.cs" />
     <Compile Include="DealDoubleUser.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

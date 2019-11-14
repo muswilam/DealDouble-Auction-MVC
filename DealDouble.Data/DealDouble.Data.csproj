@@ -117,6 +117,10 @@
     <Compile Include="Migrations\201911141425430_ChangeBidAmountColumnToDecimal.Designer.cs">
       <DependentUpon>201911141425430_ChangeBidAmountColumnToDecimal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911141747195_CreateCommentsTable.cs" />
+    <Compile Include="Migrations\201911141747195_CreateCommentsTable.Designer.cs">
+      <DependentUpon>201911141747195_CreateCommentsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -156,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911141425430_ChangeBidAmountColumnToDecimal.resx">
       <DependentUpon>201911141425430_ChangeBidAmountColumnToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911141747195_CreateCommentsTable.resx">
+      <DependentUpon>201911141747195_CreateCommentsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

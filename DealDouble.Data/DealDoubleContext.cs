@@ -21,6 +21,7 @@ namespace DealDouble.Data
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<AuctionPicture> AuctionPictures { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public static DealDoubleContext Create()
         {
