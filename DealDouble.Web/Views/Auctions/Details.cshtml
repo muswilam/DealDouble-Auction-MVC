@@ -46,10 +46,20 @@
 
             <div class="card-body">
                 <h3 class="card-title">@Model.Auction.Title</h3>
-                <h4>@Model.Auction.ActualPrice</h4>
+                <h4>
+                    $@Model.BidsAmount
+                    @if(Model.LatestBidder != null)
+                    {
+                        <span class="badge badge-pill p-1">[ @Model.LatestBidder.Email ]</span>
+                    }
+            </h4>
                 <p class="card-text">@Model.Auction.Description</p>
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                 4.0 stars
+            </div>
+
+            <div class="card-footer text-muted">
+                <button id="bidBtn" type="button" class="btn btn-primary">Bid now</button>
             </div>
         </div>
         @*<!-- /.card -->
@@ -77,3 +87,26 @@
     <!-- /.col-lg-9 -->
 
 </div>
+
+<script>
+    $("#bidBtn").click(function () {
+        $.ajax({
+            url: "@Url.Action("Bid","Bids")",
+            type: 'Post',
+            data: {
+                auctionId: '@Model.Auction.Id'
+            }
+        })
+        .done(function (response) {
+            debugger;
+            if (response.success) {
+                window.location.reload();
+            } else {
+                swal("Oops!", response.message, "error");
+            }
+        })
+        .fail(function () {
+            swal("Oops!", "Something went wrong, please try again later.", "error");
+        })
+    })
+</script>

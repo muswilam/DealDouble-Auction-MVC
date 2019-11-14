@@ -113,6 +113,10 @@
     <Compile Include="Migrations\201911141325042_CreateBidsTable.Designer.cs">
       <DependentUpon>201911141325042_CreateBidsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911141425430_ChangeBidAmountColumnToDecimal.cs" />
+    <Compile Include="Migrations\201911141425430_ChangeBidAmountColumnToDecimal.Designer.cs">
+      <DependentUpon>201911141425430_ChangeBidAmountColumnToDecimal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -149,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911141325042_CreateBidsTable.resx">
       <DependentUpon>201911141325042_CreateBidsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911141425430_ChangeBidAmountColumnToDecimal.resx">
+      <DependentUpon>201911141425430_ChangeBidAmountColumnToDecimal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

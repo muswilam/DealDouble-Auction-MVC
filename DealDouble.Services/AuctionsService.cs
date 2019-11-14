@@ -72,7 +72,9 @@ namespace DealDouble.Services
         {
             var context = new DealDoubleContext();
 
-            return context.Auctions.Include(a => a.AuctionPictures).Include("AuctionPictures.Picture").Where(a => a.Id == id).First();
+            return context.Auctions.Include(a => a.AuctionPictures).Include("AuctionPictures.Picture")
+                .Include(a => a.Bids).Include("Bids.User")
+                .Where(a => a.Id == id).First();
         }
 
         public void SaveAuction(Auction auction)

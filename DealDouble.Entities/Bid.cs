@@ -8,7 +8,7 @@ namespace DealDouble.Entities
 {
     public class Bid : BaseEntity
     {
-        public double BidAmount { get; set; }
+        public decimal BidAmount { get; set; }
 
         public DateTime Timestamp { get; set; }
 
