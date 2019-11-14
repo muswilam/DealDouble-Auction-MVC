@@ -92,7 +92,7 @@ namespace DealDouble.Web.Controllers
             model.Category = catService.GetCategory(id);
 
             model.PageTitle = model.Category.Name;
-            model.PageDescription = model.Category.Description.Length > 10 ? model.Category.Description.Substring(0, 10) : model.Category.Description;
+            model.PageDescription = model.Category.Description != null ? (model.Category.Description.Length > 10 ? model.Category.Description.Substring(0, 10) : model.Category.Description) : "Category details.";
 
             return View(model);
         }

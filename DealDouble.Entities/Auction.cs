@@ -25,5 +25,7 @@ namespace DealDouble.Entities
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public List<Bid> Bids { get; set; }
     }
 }
