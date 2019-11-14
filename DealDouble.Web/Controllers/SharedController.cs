@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DealDouble.Web.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace DealDouble.Web.Controllers
 {
@@ -46,6 +48,34 @@ namespace DealDouble.Web.Controllers
             json.Data = picturesJSON;
 
             return json;
+        }
+
+        [HttpPost]
+        public JsonResult LeaveComment(CommentViewModel model)
+        {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            try
+            {
+                var comment = new Comment();
+
+                comment.Body = model.Body;
+                comment.EntityId = model.EntityId;
+                comment.RecordId = model.RecordId;
+                comment.UserId = User.Identity.GetUserId();
+                comment.Timestamp = DateTime.Now;
+
+                var commentResult = service.LeaveComment(comment);
+
+                result.Data = new { success = true };
+            }
+            catch (Exception ex)
+            {
+                result.Data = new { success = false, message = ex.Message };
+            }
+
+            return result;
         }
     }
 }

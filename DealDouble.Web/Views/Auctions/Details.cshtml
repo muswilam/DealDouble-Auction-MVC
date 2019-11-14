@@ -62,8 +62,8 @@
                 <button id="bidBtn" type="button" class="btn btn-primary">Bid now</button>
             </div>
         </div>
-        @*<!-- /.card -->
 
+        <!-- /.card -->
         <div class="card card-outline-secondary my-4">
             <div class="card-header">
                 Product Reviews
@@ -78,10 +78,18 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
                 <small class="text-muted">Posted by Anonymous on 3/1/17</small>
                 <hr>
-                <a href="#" class="btn btn-success">Leave a Review</a>
+                <form id="commentForm">
+                    <input type="hidden" name="EntityId" value="1" />
+                    <input type="hidden" name="RecordId" value="@Model.Auction.Id" />
+                    <div class="form-group">
+                        <label for="">Write your comment below.</label>
+                        <textarea class="form-control" id="Body" name="Body" rows="3" placeholder="Write your comment..."></textarea>
+                    </div>
+                    <button id="commentBtn" type="button" class="btn btn-success">Leave a comment</button>
+                </form>
             </div>
         </div>
-        <!-- /.card -->*@
+        <!-- /.card -->
 
     </div>
     <!-- /.col-lg-9 -->
@@ -108,5 +116,23 @@
         .fail(function () {
             swal("Oops!", "Something went wrong, please try again later.", "error");
         })
+    })
+
+    $("#commentBtn").click(function () {
+        $.ajax({
+            url: "@Url.Action("LeaveComment","Shared")",
+            type: 'Post',
+            data: $("#commentForm").serialize()
+    })
+       .done(function (response) {
+           if (response.success) {
+               window.location.reload();
+           } else {
+               swal("Oops!", response.message, "error");
+           }
+       })
+       .fail(function () {
+           swal("Oops!", "Something went wrong, please try again later.", "error");
+       })
     })
 </script>

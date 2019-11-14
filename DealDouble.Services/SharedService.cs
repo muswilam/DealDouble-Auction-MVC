@@ -19,5 +19,14 @@ namespace DealDouble.Services
 
             return picture.Id;
         }
+
+        public bool LeaveComment(Comment comment)
+        {
+            var context = new DealDoubleContext();
+
+            context.Comments.Add(comment);
+            return context.SaveChanges() > 0;
+        }
+
     }
 }
