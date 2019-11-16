@@ -9,6 +9,7 @@ namespace DealDouble.Entities
 {
     public class Comment : BaseEntity
     {
+        [Required, MaxLength(400)]
         public string Body { get; set; }
 
         public DateTime Timestamp { get; set; }
