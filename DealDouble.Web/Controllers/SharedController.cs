@@ -78,7 +78,6 @@ namespace DealDouble.Web.Controllers
             return result;
         }
 
-        [HttpGet]
         public PartialViewResult EntityComments(int entityId, int recordId)
         {
             var model = new CommentsViewModel();

@@ -25,6 +25,7 @@ namespace DealDouble.Web.Controllers
             auctionsModel.CategoryId = categoryId;
             auctionsModel.SearchTerm = search;
             auctionsModel.PageNo = pageNo;
+            auctionsModel.EntityId = (int) EntitiesEnum.Auction;
 
             auctionsModel.Categories = catService.GetCategories();
 
@@ -184,9 +185,10 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(Auction auction)
+        public ActionResult Delete(int entityId, Auction auction)
         {
             auctionService.DeleteAuction(auction);
+            sharedService.DeleteEntityComments(entityId, auction.Id); //delete comments that depend on this auction 
 
             return RedirectToAction("Listing");
         }

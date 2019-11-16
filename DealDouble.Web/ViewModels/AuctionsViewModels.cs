@@ -28,6 +28,7 @@ namespace DealDouble.Web.ViewModels
         public int? CategoryId { get; set; }
         public string SearchTerm { get; set; }
         public int? PageNo { get; set; }
+        public int EntityId { get; set; }
 
         public List<Category> Categories { get; set; }
     }

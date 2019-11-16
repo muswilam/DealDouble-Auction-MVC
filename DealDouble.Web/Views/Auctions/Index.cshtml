@@ -114,9 +114,9 @@
         getAjaxSearh();
     });
 
-    //search by press enter 
+    //search by press enter
     $("#controlForm").keypress(function (event) {
-        if(event.keyCode == 13) //13 is the keyCode for enter button 
+        if(event.keyCode == 13) //13 is the keyCode for enter button
         {
             getAjaxSearh();
             return false;
@@ -142,9 +142,8 @@
         });
     };
 
-    //reset 
+    //reset
     $("#resetBtn").click(function () {
-        debugger;
         ReloadListing();
         $("#searchTxt").val('');
         $("#selectCategory").val('0');
@@ -161,13 +160,14 @@
         })
     });
 
-    //delete modal 
+    //delete modal
     $("#modalDeleteBtn").click(function () {
         var id = $(this).attr("data-id");
         $.ajax({
             url: '@Url.Action("Delete","Auctions")',
             method: 'Post',
             data: {
+                entityId: @Model.EntityId,
                 id: id,
             }
         })
@@ -195,12 +195,12 @@
             $(this).remove();
             $("#existFileLength").empty(); //empty existing pictures count in edit
             $("#fileLength").empty(); //empty old count
-            $("#fileLength").show(); //show element in edit 
+            $("#fileLength").show(); //show element in edit
             $("#fileLength").append($("#picsArea .image").length + " pictures. "); //append new count value
         });
     }
 
-    //get list of auctions  
+    //get list of auctions
     function ReloadListing() {
         $.ajax({
             url: '@Url.Action("Listing","Auctions")',

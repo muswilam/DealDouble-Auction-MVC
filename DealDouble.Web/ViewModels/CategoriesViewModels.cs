@@ -13,6 +13,7 @@ namespace DealDouble.Web.ViewModels
 
         public Pager Pager { get; set; }
         public string SearchTerm { get; set; }
+        public int EntityId { get; set; }
     }
 
     public class CateroriesViewModel : PageViewModel

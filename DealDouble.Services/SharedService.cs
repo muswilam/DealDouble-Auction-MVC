@@ -35,5 +35,19 @@ namespace DealDouble.Services
 
             return context.Comments.Include(c => c.User).Where(c => c.EntityId == entityId && c.RecordId == recordId).ToList();
         }
+
+        public void DeleteEntityComments(int entityId, int recordId)
+        {
+            var context = new DealDoubleContext();
+
+            var auctionComments = context.Comments.Where(c => c.EntityId == entityId && c.RecordId == recordId);
+
+            foreach (var auctionComment in auctionComments)
+            {
+                context.Entry(auctionComment).State = EntityState.Deleted;
+            }
+
+            context.SaveChanges();
+        }
     }
 }
