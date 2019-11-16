@@ -9,14 +9,14 @@
             @if (Model.Auction.AuctionPictures != null && Model.Auction.AuctionPictures.Count() > 0)
             {
                 var firstAuctionPicture = Model.Auction.AuctionPictures.First();
-                
+
                 var i = 0;
                 <div id="carouselIndicators" class="carousel slide my-4" data-ride="carousel">
                     <ol class="carousel-indicators">
                         @foreach (var picture in Model.Auction.AuctionPictures)
                         {
                             var active = picture == firstAuctionPicture ? "active" : string.Empty;
-                                
+
                             <li class="@active" data-target="#carouselIndicators" data-slide-to="@i"></li>
                             i++;
                         }
@@ -25,7 +25,7 @@
                         @foreach (var auctionPicture in Model.Auction.AuctionPictures)
                         {
                             var active = auctionPicture == firstAuctionPicture ? "active" : string.Empty;
-                            
+
                             <div class="carousel-item @active">
                                 <img class="d-block img-fluid" src="@auctionPicture.Picture.Url" style="width:1108px;height:500px;">
                             </div>
@@ -48,11 +48,11 @@
                 <h3 class="card-title">@Model.Auction.Title</h3>
                 <h4>
                     $@Model.BidsAmount
-                    @if(Model.LatestBidder != null)
+                    @if (Model.LatestBidder != null)
                     {
                         <span class="badge badge-pill p-1">[ @Model.LatestBidder.Email ]</span>
                     }
-            </h4>
+                </h4>
                 <p class="card-text">@Model.Auction.Description</p>
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                 4.0 stars
@@ -66,20 +66,23 @@
         <!-- /.card -->
         <div class="card card-outline-secondary my-4">
             <div class="card-header">
-                Product Reviews
+                Comments
             </div>
             <div class="card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr>
+
+                @if (Model.Comments != null && Model.Comments.Count() > 0)
+                {
+                    foreach (var comment in Model.Comments)
+                    {
+                        <p>@comment.Body.</p>
+                        <small class="text-muted">Posted by @comment.User.UserName on @comment.Timestamp</small>
+                        <hr>
+
+                    }
+                }
+
                 <form id="commentForm">
-                    <input type="hidden" name="EntityId" value="1" />
+                    <input type="hidden" name="EntityId" value="@Model.EntityId" />
                     <input type="hidden" name="RecordId" value="@Model.Auction.Id" />
                     <div class="form-group">
                         <label for="">Write your comment below.</label>
@@ -123,16 +126,19 @@
             url: "@Url.Action("LeaveComment","Shared")",
             type: 'Post',
             data: $("#commentForm").serialize()
-    })
+        })
        .done(function (response) {
            if (response.success) {
                window.location.reload();
            } else {
-               swal("Oops!", response.message, "error");
+               swal("Oops!", response.message, "error")
+               .then(function () {
+                   window.location = "@Url.Action("Login", "Account", new { returnUrl = "~/auction-details/" + Model.Auction.Id })";
+               })
            }
        })
        .fail(function () {
            swal("Oops!", "Something went wrong, please try again later.", "error");
        })
-    })
+    });
 </script>

@@ -13,6 +13,10 @@ namespace DealDouble.Web.ViewModels
         public decimal BidsAmount { get; set; }
 
         public DealDoubleUser LatestBidder { get; set; }
+
+        public int EntityId { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 
     public class AuctionsListingViewModel : PageViewModel

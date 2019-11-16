@@ -56,7 +56,7 @@ namespace DealDouble.Web.Controllers
             JsonResult result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            try
+            if(User.Identity.IsAuthenticated)
             {
                 var comment = new Comment();
 
@@ -70,9 +70,9 @@ namespace DealDouble.Web.Controllers
 
                 result.Data = new { success = true };
             }
-            catch (Exception ex)
+            else
             {
-                result.Data = new { success = false, message = ex.Message };
+                result.Data = new { success = false, message = "you've to login in first." };
             }
 
             return result;
