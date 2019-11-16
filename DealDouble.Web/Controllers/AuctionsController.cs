@@ -175,10 +175,10 @@ namespace DealDouble.Web.Controllers
 
             model.LatestBidder = latestBidder != null ? latestBidder.User : null;
 
-            model.Comments = sharedService.GetComments(model.EntityId, id);
-
             model.PageTitle = model.Auction.Title;
             model.PageDescription = model.Auction.Description != null ? (model.Auction.Description.Length > 10 ? model.Auction.Description.Substring(0, 10) : model.Auction.Description) : "Auction Details.";
+
+            model.Comments = sharedService.GetComments(model.EntityId, id);
 
             return View(model);
         }

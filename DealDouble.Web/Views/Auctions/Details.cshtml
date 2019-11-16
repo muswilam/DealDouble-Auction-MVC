@@ -70,23 +70,19 @@
             </div>
             <div class="card-body">
 
-                @if (Model.Comments != null && Model.Comments.Count() > 0)
-                {
-                    foreach (var comment in Model.Comments)
+                <div id="commentsArea">
+                    @if (Model.Comments != null && Model.Comments.Count() > 0)
                     {
-                        <p>@comment.Body.</p>
-                        <small class="text-muted">Posted by @comment.User.UserName on @comment.Timestamp</small>
-                        <hr>
-
+                        { Html.RenderAction("EntityComments", "Shared", new { entityId = Model.EntityId, recordId = Model.Auction.Id }); }
                     }
-                }
+                </div>
 
                 <form id="commentForm">
                     <input type="hidden" name="EntityId" value="@Model.EntityId" />
                     <input type="hidden" name="RecordId" value="@Model.Auction.Id" />
                     <div class="form-group">
                         <label for="">Write your comment below.</label>
-                        <textarea class="form-control" id="Body" name="Body" rows="3" placeholder="Write your comment..."></textarea>
+                        <input class="form-control" id="Body" name="Body" placeholder="Write your comment..."></input>
                     </div>
                     <button id="commentBtn" type="button" class="btn btn-success">Leave a comment</button>
                 </form>
@@ -129,7 +125,8 @@
         })
        .done(function (response) {
            if (response.success) {
-               window.location.reload();
+               GetComments(@Model.EntityId, @Model.Auction.Id);
+               $("#Body").val('');
            } else {
                swal("Oops!", response.message, "error")
                .then(function () {
@@ -141,4 +138,18 @@
            swal("Oops!", "Something went wrong, please try again later.", "error");
        })
     });
+
+    function GetComments(entityId, recordId) {
+        $.ajax({
+            url: '@Url.Action("EntityComments","Shared")',
+            data: {
+                entityId: entityId,
+                recordId: recordId,
+            },
+            type: 'Get',
+        })
+        .done(function (response) {
+            $("#commentsArea").html(response);
+        })
+    }
 </script>

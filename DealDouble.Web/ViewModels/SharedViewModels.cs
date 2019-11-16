@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DealDouble.Entities;
 
 namespace DealDouble.Web.ViewModels
 {
@@ -11,5 +12,10 @@ namespace DealDouble.Web.ViewModels
 
         public int EntityId { get; set; } //Auctions || Blogs tables 
         public int RecordId { get; set; } //auctionId, postId
+    }
+
+    public class CommentsViewModel : PageViewModel
+    {
+        public List<Comment> Comments { get; set; }
     }
 }

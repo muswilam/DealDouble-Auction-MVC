@@ -1,0 +1,9 @@
+﻿@model CommentsViewModel
+
+
+@foreach (var comment in Model.Comments)
+{
+    <p>@comment.Body</p>
+    <small class="text-muted">Posted by @comment.User.UserName on @comment.Timestamp</small>
+    <hr>
+}
