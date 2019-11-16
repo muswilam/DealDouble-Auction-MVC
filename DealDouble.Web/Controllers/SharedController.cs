@@ -56,23 +56,31 @@ namespace DealDouble.Web.Controllers
             JsonResult result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-                var comment = new Comment();
+                if (ModelState.IsValid)
+                {
+                    var comment = new Comment();
 
-                comment.Body = model.Body;
-                comment.EntityId = model.EntityId;
-                comment.RecordId = model.RecordId;
-                comment.UserId = User.Identity.GetUserId();
-                comment.Timestamp = DateTime.Now;
+                    comment.Body = model.Body;
+                    comment.EntityId = model.EntityId;
+                    comment.RecordId = model.RecordId;
+                    comment.UserId = User.Identity.GetUserId();
+                    comment.Timestamp = DateTime.Now;
 
-                var commentResult = service.LeaveComment(comment);
+                    var commentResult = service.LeaveComment(comment);
 
-                result.Data = new { success = true };
+                    result.Data = new { success = true };
+                }
+                else
+                {
+                    result.Data = new { success = false, message = "Invalid input.", isSwitchUrl = false };
+                }
+
             }
             else
             {
-                result.Data = new { success = false, message = "you've to login in first." };
+                result.Data = new { success = false, message = "you've to login in first.", isSwitchUrl = true };
             }
 
             return result;

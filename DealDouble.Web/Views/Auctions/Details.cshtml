@@ -117,27 +117,65 @@
         })
     })
 
+    //validation form
+    $("#commentForm").validate({
+        rules: {
+            Body: {
+                required: true,
+                maxlength: 400
+            }
+        },
+        messages: {
+            Body: {
+                required: "Invalid comment.",
+                maxlength: "Maximum length is 400"
+            }
+        },
+        errorClass: "text-danger"
+    })
+
+    //leave a comment by press on button.
     $("#commentBtn").click(function () {
+        if($("#commentForm").valid()) {
+            LeaveComment();
+        }
+    });
+
+    //leave a comment by press enter key.
+    $("#commentForm").keypress(function (event) {
+        if(event.keyCode == 13) //13 is the keyCode for enter button
+        {
+            if($("#commentForm").valid()) {
+                LeaveComment();
+                return false;
+            }
+        }
+    });
+
+    //leave a comment function.
+    function LeaveComment() {
         $.ajax({
             url: "@Url.Action("LeaveComment","Shared")",
             type: 'Post',
             data: $("#commentForm").serialize()
         })
-       .done(function (response) {
-           if (response.success) {
-               GetComments(@Model.EntityId, @Model.Auction.Id);
-               $("#Body").val('');
-           } else {
-               swal("Oops!", response.message, "error")
-               .then(function () {
-                   window.location = "@Url.Action("Login", "Account", new { returnUrl = "~/auction-details/" + Model.Auction.Id })";
-               })
-           }
-       })
-       .fail(function () {
-           swal("Oops!", "Something went wrong, please try again later.", "error");
-       })
-    });
+        .done(function (response) {
+            if (response.success) {
+                GetComments(@Model.EntityId, @Model.Auction.Id);
+                $("#Body").val('');
+            } else {
+                swal("Oops!", response.message, "error")
+                .then(function () {
+                    if(response.isSwitchUrl) {
+                        window.location = "@Url.Action("Login", "Account", new { returnUrl = "~/auction-details/" + Model.Auction.Id })";
+                    }
+                })
+            }
+        })
+        .fail(function () {
+            swal("Oops!", "Something went wrong, please try again later.", "error");
+        })
+    }
 
     function GetComments(entityId, recordId) {
         $.ajax({
