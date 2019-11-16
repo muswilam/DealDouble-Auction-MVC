@@ -83,16 +83,27 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(CategoryViewModel categoryModel)
+        public JsonResult Edit(CategoryViewModel categoryModel)
         {
-            var categoryFromDb = catService.GetCategory(categoryModel.Id);
+            JsonResult result = new JsonResult();
 
-            categoryFromDb.Name = categoryModel.Name;
-            categoryFromDb.Description = categoryModel.Description;
+            if (ModelState.IsValid)
+            {
+                var categoryFromDb = catService.GetCategory(categoryModel.Id);
 
-            catService.UpdateCategory(categoryFromDb);
+                categoryFromDb.Name = categoryModel.Name;
+                categoryFromDb.Description = categoryModel.Description;
 
-            return RedirectToAction("Listing");
+                catService.UpdateCategory(categoryFromDb);
+
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid inputs." };
+            }
+
+            return result;
         }
 
         [HttpGet]

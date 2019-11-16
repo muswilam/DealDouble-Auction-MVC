@@ -19,6 +19,8 @@
             <label for="Description">Description</label>
             <input type="text" class="form-control" name="Description" id="Description" value="@Model.Category.Description" />
         </div>
+
+        <div id="divError" class="form-group alert alert-danger" style="display:none;"></div>
     </div>
 
     <div class="modal-footer">
@@ -29,16 +31,48 @@
 </form>
 
 <script>
+    //form validation
+    $("#editForm").validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 10,
+                maxlength: 125
+            },
+            Description: {
+                maxlength: 400
+            }
+        },
+        messages: {
+            Name: {
+                required: "Name is rquired.",
+                minlength: "Minmum length is 10",
+                maxlength: "Maximum length is 125"
+            },
+            Description: {
+                maxlength: "Maximum length is 400."
+            }
+        },
+        errorClass: "text-danger"
+    })
+
     $("#updateBtn").click(function () {
-        $.ajax({
-            url: '@Url.Action("Edit","Categories")',
-            method: 'Post',
-            data: $("#editForm").serialize(),
-        }).done(function (response) {
-            $("#listingArea").html(response);
-            $("#formModal").modal("toggle"); //to dismiss modal after finish
-        }).fail(function () {
-            alert("Fail");
-        });
+        if ($("#editForm").valid()) {
+            $.ajax({
+                url: '@Url.Action("Edit","Categories")',
+                method: 'Post',
+                data: $("#editForm").serialize(),
+            }).done(function (response) {
+                if (response.success) {
+                    GetCategories();
+                    $("#formModal").modal("toggle");
+                } else {
+                    $("#divError").html(response.message);
+                    $("#divError").show();
+                }
+            }).fail(function () {
+                swal("Error!", "Something went wrong.", "error");
+            });
+        }
     })
 </script>

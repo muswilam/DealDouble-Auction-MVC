@@ -62,6 +62,7 @@
             }).done(function (response) {
                 if (response.success) {
                     GetCategories();
+                    $("#formModal").modal("toggle");
                 } else {
                     $("#divError").html(response.message);
                     $("#divError").show();
