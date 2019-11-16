@@ -17,6 +17,7 @@
             <input type="text" class="form-control" name="Description" id="Description" />
         </div>
 
+        <div id="divError" class="form-group alert alert-danger" style="display:none;"></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -26,16 +27,48 @@
 
 
 <script>
-    $("#saveBtn").click(function () {
-        $.ajax({
-            url: '@Url.Action("Create","Categories")',
-            type: 'Post',
-            data: $("#createForm").serialize(),
-        }).done(function (response) {
-            $("#listingArea").html(response);
-            $("#formModal").modal("toggle"); //to dismiss modal after finish
-        }).fail(function () {
-            alert("Fail");
-        });
+
+    //form validation
+    $("#createForm").validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 10,
+                maxlength: 125
+            },
+            Description: {
+                maxlength: 400
+            }
+        },
+        messages: {
+            Name: {
+                required: "Name is rquired.",
+                minlength: "Minmum length is 10",
+                maxlength: "Maximum length is 125"
+            },
+            Description: {
+                maxlength: "Maximum length is 400."
+            }
+        },
+        errorClass: "text-danger"
     })
+
+    $("#saveBtn").click(function () {
+        if ($("#createForm").valid()) {
+            $.ajax({
+                url: '@Url.Action("Create","Categories")',
+                type: 'Post',
+                data: $("#createForm").serialize(),
+            }).done(function (response) {
+                if (response.success) {
+                    GetCategories();
+                } else {
+                    $("#divError").html(response.message);
+                    $("#divError").show();
+                }
+            }).fail(function () {
+                swal("Error!", "Something went wrong.", "error");
+            });
+        }
+    });
 </script>

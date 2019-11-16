@@ -133,6 +133,16 @@
         })
     });
 
+    //get categories 
+    function GetCategories() {
+        $.ajax({
+            url: '@Url.Action("Listing","Categories")',
+        })
+        .done(function (response) {
+            $("#listingArea").html(response);
+            $("#formModal").modal("toggle");
+        })
+    }
 </script>
 
 

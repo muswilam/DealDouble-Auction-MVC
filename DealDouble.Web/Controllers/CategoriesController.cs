@@ -49,16 +49,27 @@ namespace DealDouble.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CategoryViewModel catModel)
+        public JsonResult Create(CategoryViewModel catModel)
         {
-            Category newCategory = new Category();
+            JsonResult result = new JsonResult();
 
-            newCategory.Name = catModel.Name;
-            newCategory.Description = catModel.Description;
+            if (ModelState.IsValid)
+            {
+                Category newCategory = new Category();
 
-            catService.SaveCategory(newCategory);
+                newCategory.Name = catModel.Name;
+                newCategory.Description = catModel.Description;
 
-            return RedirectToAction("Listing");
+                catService.SaveCategory(newCategory);
+
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid inputs." }; 
+            }
+
+            return result;
         }
 
         [HttpGet]
