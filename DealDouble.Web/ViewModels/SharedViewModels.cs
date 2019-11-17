@@ -12,6 +12,8 @@ namespace DealDouble.Web.ViewModels
         [Required, MaxLength(400)]
         public string Body { get; set; }
 
+        public byte Rating { get; set; }
+
         public int EntityId { get; set; } //Auctions || Blogs tables 
         public int RecordId { get; set; } //auctionId, postId
     }

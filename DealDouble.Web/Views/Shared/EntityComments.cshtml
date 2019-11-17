@@ -4,6 +4,19 @@
 @foreach (var comment in Model.Comments)
 {
     <p>@comment.Body</p>
+    
+    var defaultStars = 5 - comment.Rating;
+    
+    <span class="text-warning float-right">
+        @for (int i = 0; i < comment.Rating; i++)
+        {
+            <i class="fas fa-star"></i>
+        }
+        @for (int i = 0; i < defaultStars; i++)
+        {
+            <i class="far fa-star"></i>
+        }
+    </span>
     <small class="text-muted">Posted by @comment.User.UserName on @comment.Timestamp</small>
     <hr>
 }

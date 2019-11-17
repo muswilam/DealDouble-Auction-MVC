@@ -82,7 +82,17 @@
                     <input type="hidden" name="RecordId" value="@Model.Auction.Id" />
                     <div class="form-group">
                         <label for="">Write your comment below.</label>
-                        <input class="form-control" id="Body" name="Body" placeholder="Write your comment..."></input>
+
+                        <span class="text-warning float-right">
+                            <i class="ratingStar fas fa-star" rate-value="1"></i>
+                            <i class="ratingStar far fa-star" rate-value="2"></i>
+                            <i class="ratingStar far fa-star" rate-value="3"></i>
+                            <i class="ratingStar far fa-star" rate-value="4"></i>
+                            <i class="ratingStar far fa-star" rate-value="5"></i>
+                        </span>
+                        <input type="hidden" id="ratingValue" name="Rating" value="1" />
+
+                        <input class="form-control" id="Body" name="Body" placeholder="Write your comment..."/>
                     </div>
                     <button id="commentBtn" type="button" class="btn btn-success">Leave a comment</button>
                 </form>
@@ -116,6 +126,19 @@
             swal("Oops!", "Something went wrong, please try again later.", "error");
         })
     })
+
+    //slide rating stars
+    $(".ratingStar").hover(function () {
+        $(".ratingStar").addClass("far").removeClass("fas");
+        $(this).addClass("fas").removeClass("far");
+        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    });
+
+    $(".ratingStar").click(function () {
+        var starValue = $(this).attr("rate-value");
+
+        $("#ratingValue").val(starValue)
+    });
 
     //validation form
     $("#commentForm").validate({
@@ -163,6 +186,8 @@
             if (response.success) {
                 GetComments(@Model.EntityId, @Model.Auction.Id);
                 $("#Body").val('');
+                $("#ratingValue").val('');
+                $(".ratingStar").removeClass("fas").addClass("far");
             } else {
                 swal("Oops!", response.message, "error")
                 .then(function () {
