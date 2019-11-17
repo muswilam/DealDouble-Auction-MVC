@@ -14,6 +14,7 @@ namespace DealDouble.Data
         public DealDoubleContext()
             : base("name=DealDoubleCS")
         {
+            Database.SetInitializer<DealDoubleContext>(new DealDoubleDbInitializer());
         }
 
         public DbSet<Auction> Auctions { get; set; }
@@ -27,5 +28,9 @@ namespace DealDouble.Data
         {
             return new DealDoubleContext();
         }
+
+        //CreateDatabaseIfNotExists -- Default
+        //DropCreateDatabaseIfModelChanges
+        //DropCreateDatabaseAlways
     }
 }

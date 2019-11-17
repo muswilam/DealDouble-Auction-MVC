@@ -84,7 +84,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPassword.cs" />
     <Compile Include="DealDoubleContext.cs" />
+    <Compile Include="DealDoubleDbInitializer.cs" />
     <Compile Include="Migrations\201911031812429_AddAuctionsTable.cs" />
     <Compile Include="Migrations\201911031812429_AddAuctionsTable.Designer.cs">
       <DependentUpon>201911031812429_AddAuctionsTable.cs</DependentUpon>
