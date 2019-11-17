@@ -12,6 +12,8 @@ namespace DealDouble.Entities
         [Required, MaxLength(400)]
         public string Body { get; set; }
 
+        public byte Rating { get; set; }
+
         public DateTime Timestamp { get; set; }
 
         //nav props 
