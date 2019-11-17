@@ -129,6 +129,10 @@
     <Compile Include="Migrations\201911171216182_AddRatingColumnInCommentsTable.Designer.cs">
       <DependentUpon>201911171216182_AddRatingColumnInCommentsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911171634077_AddPicUrlColumnInUsersTable.cs" />
+    <Compile Include="Migrations\201911171634077_AddPicUrlColumnInUsersTable.Designer.cs">
+      <DependentUpon>201911171634077_AddPicUrlColumnInUsersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911171216182_AddRatingColumnInCommentsTable.resx">
       <DependentUpon>201911171216182_AddRatingColumnInCommentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911171634077_AddPicUrlColumnInUsersTable.resx">
+      <DependentUpon>201911171634077_AddPicUrlColumnInUsersTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

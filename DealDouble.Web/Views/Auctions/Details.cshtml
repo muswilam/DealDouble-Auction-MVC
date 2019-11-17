@@ -54,8 +54,6 @@
                     }
                 </h4>
                 <p class="card-text">@Model.Auction.Description</p>
-                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                4.0 stars
             </div>
 
             <div class="card-footer text-muted">
@@ -66,6 +64,10 @@
         <!-- /.card -->
         <div class="card card-outline-secondary my-4">
             <div class="card-header">
+                @if (Model.Comments != null && Model.Comments.Count() > 0)
+                {
+                   <text> @Model.Comments.Count() </text>
+                }
                 Comments
             </div>
             <div class="card-body">
