@@ -83,14 +83,17 @@
                     <div class="form-group">
                         <label for="">Write your comment below.</label>
 
-                        <span class="text-warning float-right">
-                            <i class="ratingStar fas fa-star" rate-value="1"></i>
-                            <i class="ratingStar far fa-star" rate-value="2"></i>
-                            <i class="ratingStar far fa-star" rate-value="3"></i>
-                            <i class="ratingStar far fa-star" rate-value="4"></i>
-                            <i class="ratingStar far fa-star" rate-value="5"></i>
-                        </span>
-                        <input type="hidden" id="ratingValue" name="Rating" value="1" />
+                        <div class="rate  float-right">
+                            <span class="text-warning">
+                                <i class="ratingStar far fa-star" rate-value="1"></i>
+                                <i class="ratingStar far fa-star" rate-value="2"></i>
+                                <i class="ratingStar far fa-star" rate-value="3"></i>
+                                <i class="ratingStar far fa-star" rate-value="4"></i>
+                                <i class="ratingStar far fa-star" rate-value="5"></i>
+                            </span>
+                            <br />
+                            <input type="hidden" id="ratingValue" name="Rating" value="" />
+                        </div>
 
                         <input class="form-control" id="Body" name="Body" placeholder="Write your comment..."/>
                     </div>
@@ -142,16 +145,25 @@
 
     //validation form
     $("#commentForm").validate({
+        ignore: [], //for hidden fields.
         rules: {
             Body: {
                 required: true,
                 maxlength: 400
+            },
+            Rating: {
+                required: true,
+                range: [1,5]
             }
         },
         messages: {
             Body: {
                 required: "Invalid comment.",
                 maxlength: "Maximum length is 400"
+            },
+            Rating: {
+                required: "Invalid rate.",
+                range: "Rate must be within 1-5"
             }
         },
         errorClass: "text-danger"

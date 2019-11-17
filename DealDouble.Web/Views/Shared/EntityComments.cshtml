@@ -1,7 +1,7 @@
 ﻿@model CommentsViewModel
 
 
-@foreach (var comment in Model.Comments)
+@*@foreach (var comment in Model.Comments)
 {
     <p>@comment.Body</p>
     
@@ -19,4 +19,38 @@
     </span>
     <small class="text-muted">Posted by @comment.User.UserName on @comment.Timestamp</small>
     <hr>
-}
+}*@
+
+
+<div class="card-body">
+
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="row">
+            <div class="col-md-2">
+                <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
+                <p class="text-secondary text-center">@comment.Timestamp.ToString("yyyy MMM,dd hh:MM tt")</p>
+            </div>
+            <div class="col-md-10">
+                <p>
+                    <a class="float-left" href="#"><strong>@comment.User.UserName</strong></a>
+                    @{  var defaultStars = 5 - comment.Rating; }
+
+                    <span class="text-warning float-right">
+                        @for (int i = 0; i < comment.Rating; i++)
+                        {
+                            <i class="fas fa-star"></i>
+                        }
+                        @for (int i = 0; i < defaultStars; i++)
+                        {
+                            <i class="far fa-star"></i>
+                        }
+                    </span>
+                </p>
+                <div class="clearfix"></div>
+                <p>@comment.Body</p>
+            </div>
+        </div>
+        <hr />
+    }
+</div>
