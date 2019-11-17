@@ -63,7 +63,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff;
-  margin-bottom: 140px;
+  margin-bottom: 170px;
 }
 
 [tabindex="-1"]:focus {
@@ -8192,11 +8192,12 @@ button.bg-dark:focus {
 
 .pt-5,
 .py-5 {
-  padding-top: 3rem !important;
+  border-top: .2px inset;
+  padding-top: 2rem !important;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 120px;
+  height: 170px;
 }
 
 .pr-5,
