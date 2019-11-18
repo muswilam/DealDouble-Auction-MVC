@@ -11,7 +11,7 @@
                 var firstAuctionPicture = Model.Auction.AuctionPictures.First();
 
                 var i = 0;
-                <div id="carouselIndicators" class="carousel slide my-4" data-ride="carousel">
+                <div id="carouselIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
                         @foreach (var picture in Model.Auction.AuctionPictures)
                         {
@@ -27,7 +27,7 @@
                             var active = auctionPicture == firstAuctionPicture ? "active" : string.Empty;
 
                             <div class="carousel-item @active">
-                                <img class="d-block img-fluid" src="@auctionPicture.Picture.Url" style="width:1108px;height:500px;">
+                                <img class="d-block img-thumbnail img-fluid" src="@auctionPicture.Picture.Url" style="width:1108px;height:500px;">
                             </div>
                         }
                     </div>
@@ -43,6 +43,17 @@
             }
 
             <div class="card-body">
+                <span class="text-warning float-right">
+                    @{ int? defaultStars = 5 - Model.AverageRate; }
+                    @for (int i = 0; i < Model.AverageRate; i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    @for (int i = 0; i < defaultStars; i++)
+                    {
+                        <i class="far fa-star"></i>
+                    }
+                </span>
                 <h3 class="card-title">@Model.Auction.Title</h3>
                 <h4>
                     $@Model.BidsAmount

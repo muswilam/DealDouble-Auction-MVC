@@ -5,12 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DealDouble.Web.ViewModels;
+using DealDouble.Entities;
 
 namespace DealDouble.Web.Controllers
 {
     public class HomeController : Controller
     {
-        AuctionsService service = new AuctionsService();
+        AuctionsService auctionService = new AuctionsService();
+        CommentsServices commentService = new CommentsServices();
 
         public ActionResult Index()
         {
@@ -19,8 +21,10 @@ namespace DealDouble.Web.Controllers
             auctionModel.PageTitle = "Home Page";
             auctionModel.PageDescription = "This is home page.";
 
-            auctionModel.PromotedAuctions = service.GetPromotedAuctions();
-            auctionModel.AllAuctions = service.GetAuctions();
+            auctionModel.EntityId = (int)EntitiesEnum.Auction;
+
+            auctionModel.PromotedAuctions = auctionService.GetPromotedAuctions();
+            auctionModel.AllAuctions = auctionService.GetAuctions();
 
             return View(auctionModel);
         }

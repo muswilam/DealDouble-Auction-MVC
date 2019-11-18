@@ -181,6 +181,8 @@ namespace DealDouble.Web.Controllers
 
             model.Comments = commentsService.GetComments(model.EntityId, id);
 
+            model.AverageRate = commentsService.GetAverageRate(model.EntityId, id);
+
             return View(model);
         }
 
