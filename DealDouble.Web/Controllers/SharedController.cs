@@ -95,5 +95,19 @@ namespace DealDouble.Web.Controllers
 
             return PartialView(model);
         }
+
+        public JsonResult DeleteComment(int entityId, int recordId)
+        {
+            JsonResult result = new JsonResult();
+
+            var deleteResult = service.DeleteEntityComment(entityId, recordId);
+
+            if (deleteResult)
+                result.Data = new { success = true };
+            else
+                result.Data = new { success = false, message = "Oops, something weent wrong." };
+
+            return result;
+        }
     }
 }

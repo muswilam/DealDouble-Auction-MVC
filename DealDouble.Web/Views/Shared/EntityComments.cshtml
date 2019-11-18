@@ -1,10 +1,10 @@
 ﻿@model CommentsViewModel
 
 <style>
-      div.vertical-line{
-      width: 0px; /* Use only border style */
-      height: 100%;
-      border-right: 2px inset; /* This is default border style for <hr> tag */
+    div.vertical-line {
+        width: 0px; /* Use only border style */
+        height: 100%;
+        border-right: 2px inset; /* This is default border style for <hr> tag */
     }
 </style>
 
@@ -13,6 +13,9 @@
     @foreach (var comment in Model.Comments)
     {
         var userPic = comment.User.PicUrl != null ? comment.User.PicUrl : "https://image.ibb.co/jw55Ex/def_face.jpg";
+        <span class="deleteBtn float-right text-danger" style="cursor:pointer" data-name="@comment.User.UserName" entity-id="@comment.EntityId" record-id="@comment.RecordId">
+            <i class="fas fa-trash"></i>
+        </span>
         <div class="row">
             <div class="col-md-2 vertical-line">
                 <img src="@userPic" class="img rounded-circle img-rounded img-fluid" />
@@ -43,3 +46,41 @@
         <hr />
     }
 </div>
+
+<script>
+    $(".deleteBtn").click(function () {
+        var userName = $(this).attr("data-name");
+        var entityId = $(this).attr("entity-id");
+        var recordId = $(this).attr("record-id");
+
+        swal({
+            title: "Confirm!",
+            text: "Are you sure. you want to delete " + userName + "'s comment?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+          .then(function (willDelete) {
+              if (willDelete) {
+                  $.ajax({
+                      url: '@Url.Action("DeleteComment","Shared")',
+                      data: {
+                          entityId: entityId,
+                          recordId: recordId,
+                      },
+                      type: 'Post',
+                  })
+                  .done(function (response) {
+                      if (response.success) {
+                          swal(userName + " deleted successfuly.", {
+                              icon: "success",
+                          })
+                          GetComments(entityId, recordId);
+                      } else {
+                          swal("Error!", response.message, "error");
+                      }
+                  })
+              }
+          });
+    });
+</script>
