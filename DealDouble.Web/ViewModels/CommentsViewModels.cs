@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DealDouble.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using DealDouble.Entities;
-using System.ComponentModel.DataAnnotations;
 
 namespace DealDouble.Web.ViewModels
 {
@@ -12,7 +12,7 @@ namespace DealDouble.Web.ViewModels
         [Required, MaxLength(400)]
         public string Body { get; set; }
 
-        [Range(1,5)]
+        [Range(1, 5)]
         public byte Rating { get; set; }
 
         public int EntityId { get; set; } //Auctions || Blogs tables 

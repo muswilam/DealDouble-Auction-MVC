@@ -13,7 +13,7 @@ namespace DealDouble.Web.Controllers
     {
         AuctionsService auctionService = new AuctionsService();
         CategoriesService catService = new CategoriesService();
-        SharedService sharedService = new SharedService();
+        CommentsServices commentsService = new CommentsServices();
 
         public ActionResult Index(int? categoryId, string search, int? pageNo)
         {
@@ -179,7 +179,7 @@ namespace DealDouble.Web.Controllers
             model.PageTitle = model.Auction.Title;
             model.PageDescription = model.Auction.Description != null ? (model.Auction.Description.Length > 10 ? model.Auction.Description.Substring(0, 10) : model.Auction.Description) : "Auction Details.";
 
-            model.Comments = sharedService.GetComments(model.EntityId, id);
+            model.Comments = commentsService.GetComments(model.EntityId, id);
 
             return View(model);
         }
@@ -188,7 +188,7 @@ namespace DealDouble.Web.Controllers
         public ActionResult Delete(int entityId, Auction auction)
         {
             auctionService.DeleteAuction(auction);
-            sharedService.DeleteEntityComments(entityId, auction.Id); //delete comments that depend on this auction 
+            commentsService.DeleteEntityComments(entityId, auction.Id); //delete comments that depend on this auction 
 
             return RedirectToAction("Listing");
         }

@@ -54,8 +54,8 @@
         var recordId = $(this).attr("record-id");
 
         swal({
-            title: "Confirm!",
-            text: "Are you sure. you want to delete " + userName + "'s comment?",
+            title: "Are you sure!",
+            text: "you want to delete " + userName + "'s comment?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -63,7 +63,7 @@
           .then(function (willDelete) {
               if (willDelete) {
                   $.ajax({
-                      url: '@Url.Action("DeleteComment","Shared")',
+                      url: '@Url.Action("DeleteComment","Comments")',
                       data: {
                           entityId: entityId,
                           recordId: recordId,

@@ -20,49 +20,5 @@ namespace DealDouble.Services
 
             return picture.Id;
         }
-
-        //create a comment
-        public bool LeaveComment(Comment comment)
-        {
-            var context = new DealDoubleContext();
-
-            context.Comments.Add(comment);
-            return context.SaveChanges() > 0;
-        }
-
-        //get all comments by entityId, and recordId
-        public List<Comment> GetComments(int entityId, int recordId)
-        {
-            var context = new DealDoubleContext();
-
-            return context.Comments.Include(c => c.User).Where(c => c.EntityId == entityId && c.RecordId == recordId).ToList();
-        }
-
-        //delete comments by entityId, and recordId
-        public void DeleteEntityComments(int entityId, int recordId)
-        {
-            var context = new DealDoubleContext();
-
-            var auctionComments = context.Comments.Where(c => c.EntityId == entityId && c.RecordId == recordId);
-
-            foreach (var auctionComment in auctionComments)
-            {
-                context.Entry(auctionComment).State = EntityState.Deleted;
-            }
-
-            context.SaveChanges();
-        }
-
-        //delete a comment by entityId, and recordId
-        public bool DeleteEntityComment(int entityId, int recordId)
-        {
-            var context = new DealDoubleContext();
-
-            var auctionComment = context.Comments.Where(c => c.EntityId == entityId && c.RecordId == recordId).First();
-
-            context.Entry(auctionComment).State = EntityState.Deleted;
-
-            return context.SaveChanges() > 0;
-        }
     }
 }

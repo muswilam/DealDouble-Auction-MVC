@@ -73,7 +73,7 @@
                 <div id="commentsArea">
                     @if (Model.Comments != null && Model.Comments.Count() > 0)
                     {
-                        { Html.RenderAction("EntityComments", "Shared", new { entityId = Model.EntityId, recordId = Model.Auction.Id }); }
+                        { Html.RenderAction("EntityComments", "Comments", new { entityId = Model.EntityId, recordId = Model.Auction.Id }); }
                     }
                 </div>
 
@@ -190,7 +190,7 @@
     //leave a comment function.
     function LeaveComment() {
         $.ajax({
-            url: "@Url.Action("LeaveComment","Shared")",
+            url: "@Url.Action("LeaveComment","Comments")",
             type: 'Post',
             data: $("#commentForm").serialize()
         })
@@ -201,7 +201,7 @@
                 $("#ratingValue").val('');
                 $(".ratingStar").removeClass("fas").addClass("far");
             } else {
-                swal("Oops!", response.message, "error")
+                swal("Oops!", response.message, "warning")
                 .then(function () {
                     if(response.isSwitchUrl) {
                         window.location = "@Url.Action("Login", "Account", new { returnUrl = "~/auction-details/" + Model.Auction.Id })";
@@ -216,7 +216,7 @@
 
     function GetComments(entityId, recordId) {
         $.ajax({
-            url: '@Url.Action("EntityComments","Shared")',
+            url: '@Url.Action("EntityComments","Comments")',
             data: {
                 entityId: entityId,
                 recordId: recordId,
