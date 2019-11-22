@@ -12,8 +12,6 @@ namespace DealDouble.Web.Controllers
 {
     public class CommentsController : Controller
     {
-        CommentsServices commentsService = new CommentsServices();
-
         [HttpPost]
         public JsonResult LeaveComment(CommentViewModel model)
         {
@@ -33,7 +31,7 @@ namespace DealDouble.Web.Controllers
                     comment.UserId = User.Identity.GetUserId();
                     comment.Timestamp = DateTime.Now;
 
-                    var commentResult = commentsService.LeaveComment(comment);
+                    var commentResult = CommentsServices.Instance.LeaveComment(comment);
 
                     result.Data = new { success = true };
                 }
@@ -55,7 +53,7 @@ namespace DealDouble.Web.Controllers
         {
             var model = new CommentsViewModel();
 
-            model.Comments = commentsService.GetComments(entityId, recordId);
+            model.Comments = CommentsServices.Instance.GetComments(entityId, recordId);
 
             return PartialView(model);
         }
@@ -65,7 +63,7 @@ namespace DealDouble.Web.Controllers
         {
             JsonResult result = new JsonResult();
 
-            var deleteResult = commentsService.DeleteEntityComment(entityId, recordId);
+            var deleteResult = CommentsServices.Instance.DeleteEntityComment(entityId, recordId);
 
             if (deleteResult)
                 result.Data = new { success = true };

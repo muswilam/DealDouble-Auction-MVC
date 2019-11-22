@@ -17,8 +17,6 @@ namespace DealDouble.Web.Controllers
             JsonResult result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            BidsService bidService = new BidsService();
-
             if(User.Identity.IsAuthenticated)
             {
                 Bid bid = new Bid();
@@ -28,7 +26,7 @@ namespace DealDouble.Web.Controllers
                 bid.Timestamp = DateTime.Now;
                 bid.BidAmount = 10;
 
-                var bidResult = bidService.AddBid(bid);
+                var bidResult = BidsService.Instance.AddBid(bid);
 
                 if(bidResult)
                     result.Data = new { success = true };

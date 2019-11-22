@@ -11,6 +11,24 @@ namespace DealDouble.Services
 {
     public class AuctionsService
     {
+        #region Singleton Non-Thread Safety
+        public static AuctionsService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new AuctionsService();
+                return instance;
+            }
+        }
+
+        private static AuctionsService instance { get; set; }
+
+        private AuctionsService()
+        {
+
+        }
+        #endregion
+
         public List<Auction> GetAuctions()
         {
             var context = new DealDoubleContext();

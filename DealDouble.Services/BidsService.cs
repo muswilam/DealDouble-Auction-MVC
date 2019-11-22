@@ -10,6 +10,24 @@ namespace DealDouble.Services
 {
     public class BidsService
     {
+        #region Singleton Non-Thread Safety
+        public static BidsService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new BidsService();
+                return instance;
+            }
+        }
+
+        private static BidsService instance { get; set; }
+
+        private BidsService()
+        {
+
+        }
+        #endregion
+
         public bool AddBid(Bid bid)
         {
             DealDoubleContext context = new DealDoubleContext();

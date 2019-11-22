@@ -11,6 +11,24 @@ namespace DealDouble.Services
 {
     public class CommentsServices
     {
+        #region Singleton Non-Thread Safety
+        public static CommentsServices Instance
+        {
+            get
+            {
+                if (instance == null) instance = new CommentsServices();
+                return instance;
+            }
+        }
+
+        private static CommentsServices instance { get; set; }
+
+        private CommentsServices()
+        {
+
+        }
+        #endregion
+
         //create a comment
         public bool LeaveComment(Comment comment)
         {

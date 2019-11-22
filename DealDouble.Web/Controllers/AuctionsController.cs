@@ -11,10 +11,6 @@ namespace DealDouble.Web.Controllers
 {
     public class AuctionsController : Controller
     {
-        AuctionsService auctionService = new AuctionsService();
-        CategoriesService catService = new CategoriesService();
-        CommentsServices commentsService = new CommentsServices();
-
         public ActionResult Index(int? categoryId, string search, int? pageNo)
         {
             var auctionsModel = new AuctionsListingViewModel();
@@ -27,7 +23,7 @@ namespace DealDouble.Web.Controllers
             auctionsModel.PageNo = pageNo;
             auctionsModel.EntityId = (int) EntitiesEnum.Auction;
 
-            auctionsModel.Categories = catService.GetCategories();
+            auctionsModel.Categories = CategoriesService.Instance.GetCategories();
 
             return View(auctionsModel);
         }
@@ -39,9 +35,9 @@ namespace DealDouble.Web.Controllers
 
             var auctionsModel = new AuctionsListingViewModel();
 
-            auctionsModel.AllAuctions = auctionService.FilterAuctions(categoryId, search, pageNo.Value, pageSize);
+            auctionsModel.AllAuctions = AuctionsService.Instance.FilterAuctions(categoryId, search, pageNo.Value, pageSize);
 
-            var totalAuctions = auctionService.GetAuctionsCount(categoryId, search);
+            var totalAuctions = AuctionsService.Instance.GetAuctionsCount(categoryId, search);
 
             auctionsModel.Pager = new Pager(totalAuctions,pageNo, pageSize);
 
@@ -56,7 +52,7 @@ namespace DealDouble.Web.Controllers
         {
             var model = new AuctionViewModel();
 
-            model.Categories = catService.GetCategories();
+            model.Categories = CategoriesService.Instance.GetCategories();
 
             return PartialView(model);
         }
@@ -97,7 +93,7 @@ namespace DealDouble.Web.Controllers
 
                 }
 
-                auctionService.SaveAuction(newAuction);
+                AuctionsService.Instance.SaveAuction(newAuction);
 
                 result.Data = new { success = true };
             }
@@ -114,8 +110,8 @@ namespace DealDouble.Web.Controllers
         {
             var model = new AuctionViewModel();
 
-            model.Auction = auctionService.GetAuction(id);
-            model.Categories = catService.GetCategories();
+            model.Auction = AuctionsService.Instance.GetAuction(id);
+            model.Categories = CategoriesService.Instance.GetCategories();
 
             return PartialView(model);
         }
@@ -127,7 +123,7 @@ namespace DealDouble.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var auctionFromDb = auctionService.GetAuction(auctionModel.Id);
+                var auctionFromDb = AuctionsService.Instance.GetAuction(auctionModel.Id);
 
                 auctionFromDb.Title = auctionModel.Title;
                 auctionFromDb.Description = auctionModel.Description;
@@ -149,7 +145,7 @@ namespace DealDouble.Web.Controllers
                     }).ToList());
                 }
 
-                auctionService.UpdateAuction(auctionFromDb);
+                AuctionsService.Instance.UpdateAuction(auctionFromDb);
 
                 result.Data = new { success = true};
             }
@@ -166,7 +162,7 @@ namespace DealDouble.Web.Controllers
         {
             var model = new AuctionDetailsViewModel();
 
-            model.Auction = auctionService.GetAuction(id);
+            model.Auction = AuctionsService.Instance.GetAuction(id);
 
             model.EntityId = Convert.ToInt32(EntitiesEnum.Auction);
 
@@ -179,9 +175,9 @@ namespace DealDouble.Web.Controllers
             model.PageTitle = model.Auction.Title;
             model.PageDescription = model.Auction.Description != null ? (model.Auction.Description.Length > 10 ? model.Auction.Description.Substring(0, 10) : model.Auction.Description) : "Auction Details.";
 
-            model.Comments = commentsService.GetComments(model.EntityId, id);
+            model.Comments = CommentsServices.Instance.GetComments(model.EntityId, id);
 
-            model.AverageRate = commentsService.GetAverageRate(model.EntityId, id);
+            model.AverageRate = CommentsServices.Instance.GetAverageRate(model.EntityId, id);
 
             return View(model);
         }
@@ -189,8 +185,8 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int entityId, Auction auction)
         {
-            auctionService.DeleteAuction(auction);
-            commentsService.DeleteEntityComments(entityId, auction.Id); //delete comments that depend on this auction 
+            AuctionsService.Instance.DeleteAuction(auction);
+            CommentsServices.Instance.DeleteEntityComments(entityId, auction.Id); //delete comments that depend on this auction 
 
             return RedirectToAction("Listing");
         }

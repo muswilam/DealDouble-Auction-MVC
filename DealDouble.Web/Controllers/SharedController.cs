@@ -13,8 +13,6 @@ namespace DealDouble.Web.Controllers
 {
     public class SharedController : Controller
     {
-        SharedService service = new SharedService();
-
         [HttpPost]
         public JsonResult UploadPictures()
         {
@@ -40,7 +38,7 @@ namespace DealDouble.Web.Controllers
                 var newPic = new Picture();
                 newPic.Url = picUrl;
 
-                int picId = service.SavePicture(newPic);
+                int picId = SharedService.Instance.SavePicture(newPic);
 
                 picturesJSON.Add(new { id = picId, url = picUrl });
             }
@@ -49,7 +47,5 @@ namespace DealDouble.Web.Controllers
 
             return json;
         }
-
-      
     }
 }

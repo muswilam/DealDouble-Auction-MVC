@@ -43,13 +43,17 @@
 
                             @if (auction.Description != null)
                             {
-                                <p class="card-text">@auction.Description.Substring(0, 50)...</p>
+                                if(auction.Description.Length > 50)
+                                {
+                                    <p class="card-text"> @auction.Description.Substring(0, 50)...</p>
+                                }else {
+                                    <p class="card-text"> @auction.Description</p>
+                                }
                             }
                         </div>
                         <div class="card-footer">
                             @{ 
-                                var commentsService = new DealDouble.Services.CommentsServices();
-                                int? average = commentsService.GetAverageRate(Model.EntityId, auction.Id);
+                                int? average = DealDouble.Services.CommentsServices.Instance.GetAverageRate(Model.EntityId, auction.Id);
                                 int? defaultStars = 5 - average; 
                             }
                             <span class="text-warning float-right">

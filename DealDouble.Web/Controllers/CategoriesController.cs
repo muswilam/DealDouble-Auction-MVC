@@ -11,8 +11,6 @@ namespace DealDouble.Web.Controllers
 {
     public class CategoriesController : Controller
     {
-        CategoriesService catService = new CategoriesService();
-
         public ActionResult Index(string search)
         {
             var catsModel = new CategoriesListingViewModel();
@@ -32,9 +30,9 @@ namespace DealDouble.Web.Controllers
 
             var catsModel = new CategoriesListingViewModel();
 
-            catsModel.AllCategories = catService.FilterCategories(search, pageNo.Value, pageSize); 
+            catsModel.AllCategories = CategoriesService.Instance.FilterCategories(search, pageNo.Value, pageSize);
 
-            var totalCount = catService.GetCategoriesCount(search);
+            var totalCount = CategoriesService.Instance.GetCategoriesCount(search);
             catsModel.Pager = new Pager(totalCount, pageNo.Value, pageSize);
 
             catsModel.SearchTerm = search;
@@ -60,7 +58,7 @@ namespace DealDouble.Web.Controllers
                 newCategory.Name = catModel.Name;
                 newCategory.Description = catModel.Description;
 
-                catService.SaveCategory(newCategory);
+                CategoriesService.Instance.SaveCategory(newCategory);
 
                 result.Data = new { success = true };
             }
@@ -77,7 +75,7 @@ namespace DealDouble.Web.Controllers
         {
             var model = new CategoryViewModel();
 
-            model.Category = catService.GetCategory(id);
+            model.Category = CategoriesService.Instance.GetCategory(id);
 
             return PartialView(model);
         }
@@ -89,12 +87,12 @@ namespace DealDouble.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var categoryFromDb = catService.GetCategory(categoryModel.Id);
+                var categoryFromDb = CategoriesService.Instance.GetCategory(categoryModel.Id);
 
                 categoryFromDb.Name = categoryModel.Name;
                 categoryFromDb.Description = categoryModel.Description;
 
-                catService.UpdateCategory(categoryFromDb);
+                CategoriesService.Instance.UpdateCategory(categoryFromDb);
 
                 result.Data = new { success = true };
             }
@@ -111,7 +109,7 @@ namespace DealDouble.Web.Controllers
         {
             var model = new CategoryDetailsViewModel();
 
-            model.Category = catService.GetCategory(id);
+            model.Category = CategoriesService.Instance.GetCategory(id);
 
             model.PageTitle = model.Category.Name;
             model.PageDescription = model.Category.Description != null ? (model.Category.Description.Length > 10 ? model.Category.Description.Substring(0, 10) : model.Category.Description) : "Category details.";
@@ -122,7 +120,7 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Delete(Category category)
         {
-            catService.DeleteCategory(category);
+            CategoriesService.Instance.DeleteCategory(category);
 
             return RedirectToAction("Listing");
         }

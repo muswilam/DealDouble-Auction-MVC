@@ -11,9 +11,6 @@ namespace DealDouble.Web.Controllers
 {
     public class HomeController : Controller
     {
-        AuctionsService auctionService = new AuctionsService();
-        CommentsServices commentService = new CommentsServices();
-
         public ActionResult Index()
         {
             AuctionsViewModel auctionModel = new AuctionsViewModel();
@@ -23,8 +20,8 @@ namespace DealDouble.Web.Controllers
 
             auctionModel.EntityId = (int)EntitiesEnum.Auction;
 
-            auctionModel.PromotedAuctions = auctionService.GetPromotedAuctions();
-            auctionModel.AllAuctions = auctionService.GetAuctions();
+            auctionModel.PromotedAuctions = AuctionsService.Instance.GetPromotedAuctions();
+            auctionModel.AllAuctions = AuctionsService.Instance.GetAuctions();
 
             return View(auctionModel);
         }
