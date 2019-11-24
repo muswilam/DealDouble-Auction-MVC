@@ -17,6 +17,8 @@
     <!-- Custom styles for this template -->
     <link href="~/Content/css/Dashboard.css" rel="stylesheet">
 
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://kit.fontawesome.com/9b5a3d79d0.js" crossorigin="anonymous"></script>
@@ -24,12 +26,15 @@
 
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="@Url.Action("Index","Home")">DealDone</a>
+        <input class="form-control form-control-dark w-100 bg-dark" value="Hi @User.Identity.Name" disabled >
         <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
-            </li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" style="cursor:pointer" id="logoutBtn">Logout</a>
+                </li>
+            }
         </ul>
     </nav>
 
@@ -39,72 +44,41 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                <span data-feather="home"></span>
+                            <a class="nav-link active" href="@Url.Action("Index","Dashboard")">
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file"></span>
-                                Orders
+                            <a class="nav-link" href="@Url.Action("Index","Categories")">
+                                Categories
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="shopping-cart"></span>
-                                Products
+                            <a class="nav-link" href="@Url.Action("Index","Auctions")">
+                                Auctions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Customers
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Reports
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                                Integrations
+                            <a class="nav-link" href="@Url.Action("Index","Bids")">
+                                Bids
                             </a>
                         </li>
                     </ul>
 
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Saved reports</span>
+                        <span>Users Setting</span>
                         <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Current month
+                            <a class="nav-link" href="@Url.Action("Users","Dashboard")">
+                                Users
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Last quarter
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Social engagement
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Year-end sale
+                            <a class="nav-link" href="@Url.Action("Roles","Dashboard")">
+                                Roles
                             </a>
                         </li>
                     </ul>
@@ -117,7 +91,18 @@
         </div>
     </div>
 
+    <form id="logoutForm" method="post" action="@Url.Action("LogOff","Account")">
+        @Html.AntiForgeryToken()
+    </form>
+
     <!-- Bootstrap core JavaScript -->
     <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $("#logoutBtn").click(function () {
+            $("#logoutForm").submit();
+        })
+    </script>
 </body>
 </html>
+

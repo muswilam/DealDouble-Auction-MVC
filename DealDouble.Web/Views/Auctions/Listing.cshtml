@@ -1,5 +1,4 @@
 ﻿@model AuctionsListingViewModel
-
 <table class="table table-hover">
     <thead>
         <tr>
@@ -42,7 +41,6 @@
         }
     </tbody>
 </table>
-
 @if (Model.Pager != null && Model.Pager.TotalPages > 1)
 {
     <nav aria-label="Page navigation example">
@@ -57,7 +55,6 @@
                     <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Listing", "Auctions", new { pageNo = Model.Pager.CurrentPage - 1, categoryId = Model.CategoryId, search = Model.SearchTerm })" style="cursor:pointer">Previous</a>
                 </li>
             }
-
             @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
             {
                 var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
@@ -65,7 +62,6 @@
                     <a class="pageDataLink page-link" data-href="@Url.Action("Listing", "Auctions", new { pageNo = page, categoryId = Model.CategoryId, search = Model.SearchTerm })" style="cursor:pointer">@page</a>
                 </li>
             }
-
             @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
             {
                 <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
@@ -79,7 +75,6 @@
         </ul>
     </nav>
 }
-
 <input type="hidden" id="searchTerm" value="@Model.SearchTerm" />
 <input type="hidden" id="categoryId" value="@Model.CategoryId" />
 
@@ -104,7 +99,7 @@
         $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
     });
 
-    //pagination 
+    //pagination
     $(".pageDataLink").click(function () {
         var url = $(this).attr("data-href");
 
@@ -119,4 +114,3 @@
         })
     });
 </script>
-
