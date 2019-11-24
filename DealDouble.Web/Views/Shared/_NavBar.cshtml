@@ -15,12 +15,9 @@
                 </li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    if (User.IsInRole("Admin"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Control panel</a>
-                        </li>
-                    }
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","Dashboard")">Dashboard</a>
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" style="cursor:pointer" id="logoutBtn">Logout</a>

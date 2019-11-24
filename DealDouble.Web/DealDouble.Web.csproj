@@ -162,6 +162,7 @@
     <Compile Include="Controllers\BidsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="ViewModels\CommentsViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\Dashboard.css" />
     <Content Include="Content\css\shop-homepage.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -272,6 +274,8 @@
     <Content Include="Views\Auctions\Index.cshtml" />
     <Content Include="Views\Auctions\Listing.cshtml" />
     <Content Include="Views\Comments\EntityComments.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_DashboardLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
