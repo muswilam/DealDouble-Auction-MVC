@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DealDouble.Services;
+using DealDouble.Web.ViewModels;
 
 namespace DealDouble.Web.Controllers
 {
@@ -10,7 +12,13 @@ namespace DealDouble.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new DashboardViewModel();
+
+            model.UsersCount = DealDoubleUserManager.GetUsersCount();
+            model.AuctionsCount = AuctionsService.Instance.GetAuctionsCount();
+            model.BidsCount = BidsService.Instance.GetBidsCount();
+            
+            return View(model);
         }
     }
 }

@@ -177,6 +177,7 @@
     <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\CategoriesViewModels.cs" />
     <Compile Include="ViewModels\CommentsViewModels.cs" />
+    <Compile Include="ViewModels\DashboardViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\Dashboard.css" />

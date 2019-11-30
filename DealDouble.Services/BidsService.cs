@@ -28,12 +28,21 @@ namespace DealDouble.Services
         }
         #endregion
 
+        //create new bid
         public bool AddBid(Bid bid)
         {
             DealDoubleContext context = new DealDoubleContext();
 
             context.Bids.Add(bid);
             return context.SaveChanges() > 0;
+        }
+
+        //get count of all bids that been created
+        public int GetBidsCount()
+        {
+            var context = new DealDoubleContext();
+
+            return context.Bids.Count();
         }
     }
 }

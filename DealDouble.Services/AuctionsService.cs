@@ -60,6 +60,15 @@ namespace DealDouble.Services
             return auction.OrderByDescending(a => a.Id).Skip(skipCount).Take(pageSize).ToList();
         }
 
+        //get count of all auctions 
+        public int GetAuctionsCount()
+        {
+            var context = new DealDoubleContext();
+
+            return context.Auctions.Include(a => a.Category).Count();
+        }
+
+        //get count of auction that filtered by category and search
         public int GetAuctionsCount(int? categoryId, string searchTerm)
         {
             var context = new DealDoubleContext();

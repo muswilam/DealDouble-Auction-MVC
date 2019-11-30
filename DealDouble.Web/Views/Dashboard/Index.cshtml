@@ -1,4 +1,5 @@
-﻿
+﻿@model DashboardViewModel
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
@@ -8,5 +9,32 @@
     <div class="container">
         <h1 class="display-4">Hi, @User.Identity.Name!</h1>
         <p class="lead">This is a dashboard for controling everything in your website.</p>
+    </div>
+</div>
+
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body text-center text-primary">
+            <h5 class="card-title display-4">@Model.UsersCount</h5>
+        </div>
+        <div class="card-footer display-4 text-center">
+            <a href="@Url.Action("Index","Users")">Users</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center text-primary">
+            <h5 class="card-title display-4">@Model.AuctionsCount</h5>
+        </div>
+        <div class="card-footer display-4 text-center">
+            <a href="@Url.Action("Index","Users")">Auctions</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center text-primary">
+            <h5 class="card-title display-4">@Model.BidsCount</h5>
+        </div>
+        <div class="card-footer display-4 text-center">
+            <a href="@Url.Action("Index","Users")">Bids</a>
+        </div>
     </div>
 </div>
