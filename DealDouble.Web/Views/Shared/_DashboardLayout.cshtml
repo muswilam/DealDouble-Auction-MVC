@@ -25,84 +25,75 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="@Url.Action("Index","Home")">DealDone</a>
-        <input class="form-control form-control-dark w-100 bg-dark" value="Hi @User.Identity.Name" disabled >
-        <ul class="navbar-nav px-3">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <li class="nav-item">
-                    <a class="nav-link" style="cursor:pointer" id="logoutBtn">Logout</a>
-                </li>
-            }
-        </ul>
-    </nav>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading"><a href="@Url.Action("Index","Home")" class="navbar-brand"> DealDone</a> </div>
+            <div class="list-group list-group-flush">
+                <a href="@Url.Action("Index","Dashboard")" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="@Url.Action("Index","Categories")" class="list-group-item list-group-item-action bg-light">Categories</a>
+                <a href="@Url.Action("Index","Auctions")" class="list-group-item list-group-item-action bg-light">Auctions</a>
+                <a href="@Url.Action("Index","Bids")" class="list-group-item list-group-item-action bg-light">Bids</a>
+                <a href="@Url.Action("Index","Users")" class="list-group-item list-group-item-action bg-light">Users</a>
+                <a href="@Url.Action("Index","Roles")" class="list-group-item list-group-item-action bg-light">Roles</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="@Url.Action("Index","Dashboard")">
-                                Dashboard <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Categories")">
-                                Categories
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Auctions")">
-                                Auctions
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Bids")">
-                                Bids
-                            </a>
-                        </li>
-                    </ul>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary mr-2" id="menu-toggle">-</button>
 
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Users Setting</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Users","Dashboard")">
-                                Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Roles","Dashboard")">
-                                Roles
-                            </a>
-                        </li>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <input class="form-control form-control-dark w-100" value="Hi, @User.Identity.Name" disabled>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="cursor:pointer" id="logoutBtn">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Login","Account")">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="container-fluid p-3">
                 @RenderBody()
-            </main>
+            </div>
         </div>
+        <!-- /#page-content-wrapper -->
+
     </div>
+    <!-- /#wrapper -->
 
-    <form id="logoutForm" method="post" action="@Url.Action("LogOff","Account")">
-        @Html.AntiForgeryToken()
-    </form>
+        <form id="logoutForm" method="post" action="@Url.Action("LogOff","Account")">
+            @Html.AntiForgeryToken()
+        </form>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        $("#logoutBtn").click(function () {
-            $("#logoutForm").submit();
-        })
-    </script>
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $("#logoutBtn").click(function () {
+                $("#logoutForm").submit();
+            })
+        </script>
 </body>
 </html>
 
